@@ -7,7 +7,7 @@ import OutletDetails from "../../screens/OutlletDetails";
 import Rewards from "../../screens/Rewards";
 import Settings from "../../screens/Settings";
 import Login from "../../screens/Login";
-import Signup from "../../screens/Signup";
+// import Signup from "../../screens/Signup";
 import ForgetPassward from "../../screens/forgetPassword";
 import VerificationCode from "../../screens/VerificationCode";
 import ResetPassword from "../../screens/ResetPassword";
@@ -28,10 +28,10 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login/>,
       },
-      {
-        path: "/signup",
-        element: <Signup/>,
-      },
+      // {
+      //   path: "/signup",
+      //   element: <Signup/>,
+      // },
       {
         path: "/forgetpassword",
         element: <ForgetPassward  />,

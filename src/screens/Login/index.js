@@ -33,7 +33,7 @@ export default function Login() {
                         backgroundImage: `url(${images.logoBg})`,
                     }}>
                     <div className='w-full sm:h-[50vh] flex flex-col items-center justify-between '>
-                        <div >
+                        <div className='mt-28' >
                             <img className='sm:w-60 xl:w-80' src={images.loginLogo} />
                         </div>
                         <div className='sm:w-60 lg:w-72 sm:text-base lg:text-xl text-textColor text-center'>
@@ -67,7 +67,7 @@ export default function Login() {
                     <div onClick={() => navigate("/forgetpassword")} className='cursor-pointer w-full lg:w-[80%] flex justify-end mt-2  text-md lg:text-lg text-textColor'>
                         Forgot Password?
                     </div>
-                    <div className='w-full lg:w-[80%] flex items-center justify-center gap-2   xl:gap-4  mt-2 md:mt-4'>
+                    {/* <div className='w-full lg:w-[80%] flex items-center justify-center gap-2   xl:gap-4  mt-2 md:mt-4'>
                         <div className='border border-black w-[31%] sm:w-22 md:w-26 xl:w-32'></div>
                         <div className='text-md lg:text-lg'>Sign In with</div>
                         <div className='border border-black w-[31%] sm:w-22 md:w-26 xl:w-32'></div>
@@ -82,7 +82,7 @@ export default function Login() {
                     </div>
                     <div className='w-full lg:w-[95%] xl:w-[80%] flex justify-center mt-4  text-sm sm:text-base lg:text-lg'>
                         Don’t have an account?&nbsp;<span className='text-green font-medium cursor-pointer' onClick={() => navigate("/signup")}> Sign Up Today!</span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

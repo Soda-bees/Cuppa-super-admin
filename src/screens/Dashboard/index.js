@@ -279,7 +279,7 @@ export default function Dashboard() {
             <div className='w-[98%]'>
                 <div className='relative'>
                     <img className='absolute left-2 top-4 w-5  cursor-pointer' src={images.searchIcon} />
-                    <input placeholder='Search' className='w-[100%] border-2 border-borderColor rounded-xl cursor-pointer p-2 pl-8 text-xl outline-none' 
+                    <input placeholder='Search' className='w-[100%] border-2 border-borderColor rounded-xl cursor-pointer bg-transparent p-2 pl-8 text-xl outline-none' 
                     onChange={(e) => setSearch(e.target.value)}/>
                 </div>
                 <div className=' mt-4 sm:mt-6 md:mt-10 mb-4'>

@@ -50,7 +50,10 @@ const Layout = () => {
         {authToken &&
         <SideNav />}
         {/* <SideNav /> */}
+        <div className="bg-bgBody min-h-[100vh]">
+
         <Outlet />
+        </div>
       </ModalContext.Provider>
     </>
     </>
