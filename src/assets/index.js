@@ -60,10 +60,11 @@ import checkBoxNotSeleted from "./checkBoxNotselected.png"
 import leftArrow from "./leftArrow.png"
 import arrowRight from "./arrowRight.png"
 import uploadImg from "./uploadImg.png"
-
+import eyeOpen from "./eyeOpen.png"
 
 
 const images = {
+   eyeOpen,
    logo,
    mobLogo,
    dashboardIcon,

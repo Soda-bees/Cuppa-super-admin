@@ -3,11 +3,14 @@ import images from '../../assets'
 import { useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearAuthToken } from '../../store/authTokenSlice';
+import { clearAdminData, selectAdminData } from '../../store/adminDataSlice';
 
 export default function Settings() {
-    
+
+    const adminData = useSelector(selectAdminData)
+
     const [adminName, setAdminName] = useState("")
     const [email, setEmail] = useState("")
     const [contact, setContact] = useState("")
@@ -26,7 +29,7 @@ export default function Settings() {
 
     const handleLogout = () => {
         dispatch(clearAuthToken());
-        navigate('/login');
+        dispatch(clearAdminData())
     };
 
 
@@ -52,13 +55,13 @@ export default function Settings() {
                 <div className='flex flex-col items-center md:flex-row md:gap-4 sm:justify-center mb-0 md:mb-4'>
                     <div className='w-[95%] md:w-[45%] bg-white rounded-xl mt-2 p-2'>
                         <div className='text-sm md:text-lg text-textColor'>Admin Name</div>
-                        <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' placeholder='Admin Name' 
-                        onChange={(e) => setAdminName(e.target.value)} type='text'/>
+                        <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' placeholder='Admin Name'
+                            onChange={(e) => setAdminName(e.target.value)} type='text' />
                     </div>
                     <div className='w-[95%] md:w-[45%] bg-white rounded-xl mt-2 p-2' >
                         <div className='text-sm md:text-lg text-textColor'>Email</div>
-                        <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' type='text' placeholder='Email' 
-                        onChange={(e) => setEmail(e.target.value)}/>
+                        <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' type='text' placeholder='Email'
+                            onChange={(e) => setEmail(e.target.value)} />
                     </div>
                 </div>
                 <div className='flex flex-col items-center md:flex-row md:gap-4 sm:justify-center md:mb-4'>
@@ -75,7 +78,7 @@ export default function Settings() {
                     </div>
                     <div className='w-[95%] md:w-[45%] bg-white rounded-xl mt-2 p-2'>
                         <div className='text-sm md:text-lg text-textColor'>Location</div>
-                        <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' type='text' placeholder='Location'/>
+                        <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' type='text' placeholder='Location' />
                     </div>
                 </div>
             </div>
@@ -94,38 +97,38 @@ export default function Settings() {
                     <div className='w-full flex flex-col items-center xl:w-[45%]'>
                         <div className='w-[90%] xl:w-[100%] bg-white rounded-xl xl:mt-2 p-2 relative'>
                             <div className='text-sm md:text-lg text-textColor'>Enter Current Password</div>
-                            <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' placeholder='Enter Current Password' type={showCurrentPassword ? 'text' : 'password'} 
-                            onChange={(e) => setCurrentPasswaord(e.target.value)}/>
-                            <img className='w-6 absolute top-7 md:top-10 right-4 cursor-pointer' src={images.hidePasswordIcon}  
-                            onClick={() => setShowCurrentPassword(!showCurrentPassword)} />
+                            <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' placeholder='Enter Current Password' type={showCurrentPassword ? 'text' : 'password'}
+                                onChange={(e) => setCurrentPasswaord(e.target.value)} />
+                            <img className='w-6 absolute top-7 md:top-10 right-4 cursor-pointer' src={images.hidePasswordIcon}
+                                onClick={() => setShowCurrentPassword(!showCurrentPassword)} />
                         </div>
                         <div className='w-[90%] xl:w-[100%] bg-white rounded-xl mt-2 p-2 relative' >
                             <div className='text-sm md:text-lg text-textColor'>Enter New Password</div>
-                            <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' placeholder='Enter New Password' type={showNewPassword ? 'text' : 'password'} 
-                            onChange={(e) => setNewPasswaord(e.target.value)}/>
-                            <img className='w-6 absolute top-7 md:top-10 right-4 cursor-pointer' src={images.hidePasswordIcon} 
-                            onClick={() => setShowNewPassword(!showNewPassword)} />
+                            <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md' placeholder='Enter New Password' type={showNewPassword ? 'text' : 'password'}
+                                onChange={(e) => setNewPasswaord(e.target.value)} />
+                            <img className='w-6 absolute top-7 md:top-10 right-4 cursor-pointer' src={images.hidePasswordIcon}
+                                onClick={() => setShowNewPassword(!showNewPassword)} />
                         </div>
                         <div className='w-[90%] xl:w-[100%] bg-white rounded-xl mt-2 p-2 relative' >
                             <div className='text-sm md:text-lg text-textColor'>Enter Confirm Password</div>
-                            <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg' placeholder='Enter Confirm Password'  type={showConfirmPassword ? 'text' : 'password'} 
-                            onChange={(e) => setConfirmPasswaord(e.target.value)}/>
-                            <img className='w-6 absolute top-7 md:top-10 right-4 cursor-pointer' src={images.hidePasswordIcon} 
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
+                            <input className='cursor-pointer w-[100%] outline-none text-sm md:text-lg' placeholder='Enter Confirm Password' type={showConfirmPassword ? 'text' : 'password'}
+                                onChange={(e) => setConfirmPasswaord(e.target.value)} />
+                            <img className='w-6 absolute top-7 md:top-10 right-4 cursor-pointer' src={images.hidePasswordIcon}
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
                         </div>
                     </div>
                     <div className='w-full flex flex-col items-center xl:w-[45%]'>
                         <div className='w-[90%] xl:w-[100%] bg-white rounded-xl xl:mt-2 p-4 flex items-center justify-between'>
                             <div className='text-xs sm:text-sm md:text-lg font-semibold'>Remember Login Details</div>
-                            <div className={rememberLogin ? 'cursor-pointer bg-green flex justify-end items-center w-20 sm:w-16 py-1 rounded-2xl' : ' cursor-pointer bg-bgtoggle flex justify-star w-20 sm:w-16 py-1  items-center rounded-2xl '} 
-                            onClick={() => setRememberLogin(!rememberLogin)}>
+                            <div className={rememberLogin ? 'cursor-pointer bg-green flex justify-end items-center w-20 sm:w-16 py-1 rounded-2xl' : ' cursor-pointer bg-bgtoggle flex justify-star w-20 sm:w-16 py-1  items-center rounded-2xl '}
+                                onClick={() => setRememberLogin(!rememberLogin)}>
                                 <div className={rememberLogin ? 'cursor-pointer w-5 h-5 md:w-6 md:h-6 rounded-full bg-white mr-1' : 'w-5 h-5 md:w-6 md:h-6 rounded-full bg-white ml-1'}></div>
                             </div>
                         </div>
                         <div className='w-[90%] xl:w-[100%] bg-white rounded-xl mt-2 p-4 flex justify-between'>
                             <div className='text-xs sm:text-sm md:text-lg font-semibold'>Two Factor Authentication</div>
-                            <div className={twoFactor ? 'bg-green flex justify-end items-center w-20 sm:w-16 py-1 rounded-2xl' : 'cursor-pointer bg-bgtoggle flex justify-star w-20 sm:w-16 py-1 items-center rounded-2xl'} 
-                            onClick={() => setTwoFactor(!twoFactor)}>
+                            <div className={twoFactor ? 'bg-green flex justify-end items-center w-20 sm:w-16 py-1 rounded-2xl' : 'cursor-pointer bg-bgtoggle flex justify-star w-20 sm:w-16 py-1 items-center rounded-2xl'}
+                                onClick={() => setTwoFactor(!twoFactor)}>
                                 <div className={twoFactor ? 'w-5 h-5 md:w-6 md:h-6 rounded-full bg-white mr-1' : 'w-5 h-5 md:w-6 md:h-6 rounded-full bg-white ml-1'}></div>
                             </div>
                         </div>

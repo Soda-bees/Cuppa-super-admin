@@ -3,8 +3,7 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import SideNav from "../../Component/SideNav";
 import { useSelector } from "react-redux";
 import { selectAuthToken } from "../../store/authTokenSlice";
-
-
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const ModalContext = createContext();
 
@@ -51,6 +50,7 @@ const Layout = () => {
         <SideNav />}
         {/* <SideNav /> */}
         <Outlet />
+        <ToastContainer />
       </ModalContext.Provider>
     </>
     </>

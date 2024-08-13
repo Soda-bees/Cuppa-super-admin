@@ -28,13 +28,13 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login/>,
       },
-      {
-        path: "/signup",
-        element: <Signup/>,
-      },
+      // {
+      //   path: "/signup",
+      //   element: <Signup/>,
+      // },
       {
         path: "/forgetpassword",
-        element: <ForgetPassward  />,
+        element: <ForgetPassward  />, 
       },
       {
         path: "/verificationcode",
@@ -46,7 +46,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/outlets",
-        element: <Outlets/>,
+        element: <ProtectedRoute Compunent={Outlets} />,
+        // element: <Outlets/>,
       },
       {
         path:"/outletdetails/:index",
@@ -54,11 +55,13 @@ const router = createBrowserRouter([
       },
       {
         path:"/rewards",
-        element: <Rewards/>,
+        element: <ProtectedRoute Compunent={Rewards} />,
+        // element: <Rewards/>,
       },
       {
         path:"/settings",
-        element: <Settings/>,
+        element: <ProtectedRoute Compunent={Settings} />,
+        // element: <Settings/>,
       },
      
     ],
