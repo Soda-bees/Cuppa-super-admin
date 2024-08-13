@@ -113,7 +113,7 @@ export default function Settings() {
               />
               <img
                 className="w-6 absolute top-7 md:top-10 right-4 cursor-pointer"
-                src={images.hidePasswordIcon}
+                src={showCurrentPassword ? images.hidePasswordIcon : images.showPassword}
                 onClick={() => setShowCurrentPassword(!showCurrentPassword)}
               />
             </div>
@@ -128,7 +128,7 @@ export default function Settings() {
               />
               <img
                 className="w-6 absolute top-7 md:top-10 right-4 cursor-pointer"
-                src={images.hidePasswordIcon}
+                src={showNewPassword ? images.hidePasswordIcon : images.showPassword}
                 onClick={() => setShowNewPassword(!showNewPassword)}
               />
             </div>
@@ -143,21 +143,21 @@ export default function Settings() {
               />
               <img
                 className="w-6 absolute top-7 md:top-10 right-4 cursor-pointer"
-                src={images.hidePasswordIcon}
+                src={showConfirmPassword ? images.hidePasswordIcon : images.showPassword}
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               />
             </div>
           </div>
           <div className="w-full flex flex-col items-center xl:w-[45%]">
-            <div className="w-[90%] xl:w-[100%] bg-inputBg rounded-xl xl:mt-2 p-4 flex items-center justify-between">
+            <div className="w-[90%] xl:w-[100%] bg-inputBg rounded-xl xl:mt-2 p-4  flex items-center justify-between">
               <div className="text-xs sm:text-sm md:text-lg font-semibold">
                 Remember Login Details
               </div>
               <div
                 className={
                   rememberLogin
-                    ? "cursor-pointer bg-green flex justify-end items-center w-20 sm:w-16 py-1 rounded-2xl"
-                    : " cursor-pointer bg-bgtoggle flex justify-star w-20 sm:w-16 py-1  items-center rounded-2xl "
+                    ? "cursor-pointer bg-green flex justify-end items-center w-16 py-1 rounded-2xl"
+                    : " cursor-pointer bg-bgtoggle flex justify-star  w-16 py-1  items-center rounded-2xl "
                 }
                 onClick={() => setRememberLogin(!rememberLogin)}
               >
@@ -177,8 +177,8 @@ export default function Settings() {
               <div
                 className={
                   twoFactor
-                    ? "bg-green flex justify-end items-center w-20 sm:w-16 py-1 rounded-2xl"
-                    : "cursor-pointer bg-bgtoggle flex justify-star w-20 sm:w-16 py-1 items-center rounded-2xl"
+                    ? "bg-green flex justify-end items-center w-16  py-1 rounded-2xl"
+                    : "cursor-pointer bg-bgtoggle flex justify-star w-16  py-1 items-center rounded-2xl"
                 }
                 onClick={() => setTwoFactor(!twoFactor)}
               >

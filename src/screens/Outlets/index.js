@@ -182,13 +182,10 @@ export default function Outlets() {
                                     <div className='text-md md:text-xl font-semibold'>Havana Cafe</div>
                                     <div className='text-md md:text-xl'>Open</div>
                                 </div>
-                                <div className='flex items-center justify-between my-2'>
+                                <div className='my-2'>
                                     <div className='flex item-center gap-1'>
                                         <img className='w-4 object-contain md:w-5' src={images.locationIcon}/>
                                         <div className='text-md md:text-xl text-lightGray'>NY,Newyork</div>
-                                    </div>
-                                    <div>
-                                        <img className='h-4 md:h-6' src={images.dotIcon}/>
                                     </div>
                                 </div>
                             </div>
