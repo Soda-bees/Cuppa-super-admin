@@ -61,7 +61,7 @@ import leftArrow from "./leftArrow.png"
 import arrowRight from "./arrowRight.png"
 import uploadImg from "./uploadImg.png"
 import eyeOpen from "./eyeOpen.png"
-
+import showPassword from "./showPassword.png"
 
 const images = {
    eyeOpen,
@@ -127,6 +127,7 @@ const images = {
    arrowRight,
    leftArrow,
    uploadImg,
+   showPassword,
 
 }
 

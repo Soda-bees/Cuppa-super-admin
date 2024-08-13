@@ -53,11 +53,11 @@ export default function Rewards() {
     };
 
     return (
-        <div className=' md:pl-[18%] sm:pl-[19%] pl-[22%] py-4 '>
+        <div className=' md:pl-[18%] sm:pl-[19%] pl-[22%] py-4  '>
             <div className='w-[98%]'>
                 <div className='relative mb-4 sm:mb-6 md:mb-10'>
                     <img className='absolute left-2 top-3 md:top-4 w-5 cursor-pointer' src={images.searchIcon} />
-                    <input placeholder='search' className='w-[100%] border-2 border-borderColor rounded-xl cursor-pointer p-2 pl-8 text-md md:text-xl outline-none' onChange={(e) => setSearch(e.target.value)} />
+                    <input placeholder='search' className='w-[100%] border-2 border-borderColor rounded-xl bg-transparent cursor-pointer p-2 pl-8 text-md md:text-xl outline-none' onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className='text-xl sm:text-2xl font-semibold mb-1'>
                     Rewards
@@ -69,8 +69,13 @@ export default function Rewards() {
                     Choose Rewards
                 </div>
                 <div className='grid grid-cols-2 sm:flex flex-wrap justify-start gap-2 mb-10 sm:mb-20'>
-                    {cards.map((cards) => (
-                        <div key={cards.id} className='bg-white border border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40 flex items-center justify-center'>
+                    {cards.map((cards ,index) => (
+                        <div key={index}
+                        onClick={() => {
+                            setSelectedReward(cards);
+                            setIsModalOpen(true);
+                        }} 
+                        className='bg-white border border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40 flex items-center justify-center'>
                             <img className='w-32 sm:w-28 md:w-32' src={cards.src} alt={`cards ${cards.id}`} />
                         </div>
                     ))}
@@ -115,10 +120,7 @@ export default function Rewards() {
                             {dropDownIndex === index && (
                                 <div className='border-2 border-borderColor rounded-xl absolute right-1 top-7 sm:right-3 sm:top-11 p-2 bg-white'>
                                     <div className='flex justify-center items-center my-1 '>
-                                        <div onClick={() => {
-                                            setSelectedReward(reward);
-                                            setIsModalOpen(true);
-                                        }} className='text-sm cursor-pointer'>
+                                        <div className='text-sm cursor-pointer'>
                                             Edit
                                         </div>
                                     </div>
@@ -145,7 +147,7 @@ export default function Rewards() {
                         <>
                             <div className='flex flex-col items-center gap-2'>
                                 <div key={selectedReward.id} className='bg-white border border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40 flex items-center justify-center'>
-                                    <img className='w-32 sm:w-28 md:w-32' src={selectedReward.image} alt={selectedReward.title} />
+                                    <img className='w-32 sm:w-28 md:w-32' src={selectedReward.src} alt={selectedReward.title} />
                                 </div>
                                 <div className='flex gap-2 text-base text-green'>
                                     <img className='w-5 object-contain' src={images.uploadImg} alt='Upload'/>
@@ -154,11 +156,11 @@ export default function Rewards() {
                             </div>
                             <div className='mt-4'>
                                 <div className='ml-1 mb-1 text-textColor'>Reward Name</div>
-                                <input className='w-full border border-borderColor rounded-xl p-2 outline-none font-semibold' type='text' defaultValue={selectedReward.title} onChange={(e) => setRewardName(e.target.value)} />
+                                <input className='w-full border border-borderColor rounded-xl p-2 outline-none font-semibold' type='text' onChange={(e) => setRewardName(e.target.value)} />
                             </div>
                             <div className='mt-2 relative'>
                                 <div className='ml-1 mb-1 text-textColor'>Beans Required</div>
-                                <input className='w-full border border-borderColor rounded-xl p-2 outline-none font-semibold' type='text' defaultValue={selectedReward.points} onChange={(e) => setRequireBeans(e.target.value)} />
+                                <input className='w-full border border-borderColor rounded-xl p-2 outline-none font-semibold' type='text'  onChange={(e) => setRequireBeans(e.target.value)} />
                                 <img className='w-6 absolute top-7 md:top-10 right-4' src={images.coffeeBeans} alt='Coffee Beans' />
                             </div>
                             <div className='mt-4 flex justify-between items-center'>

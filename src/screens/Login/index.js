@@ -59,7 +59,7 @@ export default function Login() {
                         backgroundImage: `url(${images.logoBg})`,
                     }}>
                     <div className='w-full sm:h-[50vh] flex flex-col items-center justify-between '>
-                        <div >
+                        <div className='mt-28' >
                             <img className='sm:w-60 xl:w-80' src={images.loginLogo} />
                         </div>
                         <div className='sm:w-60 lg:w-72 sm:text-base lg:text-xl text-textColor text-center'>

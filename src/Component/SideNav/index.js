@@ -12,7 +12,7 @@ export default function SideNav() {
   return (
     <div className='border-2 border-borderColor rounded-xl h-[90vh] text-black w-[15%] m-4 fixed ' >
       <div className='hidden md:block w-[90%]  mt-12 md:ml-2  lg:ml-4 mb-28' >
-      <img onClick={() => navigate("/dashboard")} className='w-[80%] cursor-pointer' src={images.logo}/>
+      <img onClick={() => navigate("/")} className='w-[80%] cursor-pointer' src={images.logo}/>
       </div>
       <div className='block md:hidden flex justify-center mt-12  mb-28' >
       <img className='w-[60%] cursor-pointer' src={images.mobLogo} onClick={() => navigate("/")}/>

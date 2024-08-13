@@ -19,7 +19,9 @@ module.exports = {
         bgSettings : "#F3F3F3",
         bgtoggle : "#D7D3D3",
         bgLogin :"#F6F6F6",
-        orderColor:"#979797"
+        orderColor:"#979797",
+        inputBg: "#F7F7F7",
+        bgBody: "#F6F6F6"
       }
     },
   },

@@ -48,9 +48,10 @@ const Layout = () => {
       <ModalContext.Provider value={useModal}>
         {authToken &&
         <SideNav />}
-        {/* <SideNav /> */}
+        <div className="bg-bgBody min-h-[100vh]">
         <Outlet />
         <ToastContainer />
+        </div>
       </ModalContext.Provider>
     </>
     </>

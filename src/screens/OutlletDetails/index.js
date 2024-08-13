@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import images from '../../assets'
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function OutletDetails() {
     const [dropDown, setDropDown] = useState(false)
@@ -9,6 +12,7 @@ export default function OutletDetails() {
     const [isEventModalOpen, setIsEventModalOpen] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(null);
     const [currentIndexTwo, setCurrentIndexTwo] = useState(null);
+    const [orderStatus, setOrderStatus] = useState("Order Status");
     const navigate = useNavigate()
 
     const openModal = (index) => {
@@ -229,6 +233,110 @@ export default function OutletDetails() {
                 },
             ]
         },
+        {
+            image: images.starters,
+            name: "Starters",
+            items: [
+                {
+                    image: images.cappuccino,
+                    name: "abc",
+                    price: "3.45",
+                },
+                {
+                    image: images.flatWhite,
+                    name: "Flat White",
+                    price: "3.45",
+                },
+                {
+                    image: images.caramelLatte,
+                    name: "Caramel Latte",
+                    price: "3.45",
+                },
+                {
+                    image: images.hazelnutLatte,
+                    name: "Hazelnut Latte",
+                    price: "3.45",
+                },
+            ]
+        },
+        {
+            image: images.starters,
+            name: "Starters",
+            items: [
+                {
+                    image: images.cappuccino,
+                    name: "abc",
+                    price: "3.45",
+                },
+                {
+                    image: images.flatWhite,
+                    name: "Flat White",
+                    price: "3.45",
+                },
+                {
+                    image: images.caramelLatte,
+                    name: "Caramel Latte",
+                    price: "3.45",
+                },
+                {
+                    image: images.hazelnutLatte,
+                    name: "Hazelnut Latte",
+                    price: "3.45",
+                },
+            ]
+        },
+        {
+            image: images.starters,
+            name: "Starters",
+            items: [
+                {
+                    image: images.cappuccino,
+                    name: "abc",
+                    price: "3.45",
+                },
+                {
+                    image: images.flatWhite,
+                    name: "Flat White",
+                    price: "3.45",
+                },
+                {
+                    image: images.caramelLatte,
+                    name: "Caramel Latte",
+                    price: "3.45",
+                },
+                {
+                    image: images.hazelnutLatte,
+                    name: "Hazelnut Latte",
+                    price: "3.45",
+                },
+            ]
+        },
+        {
+            image: images.starters,
+            name: "Starters",
+            items: [
+                {
+                    image: images.cappuccino,
+                    name: "abc",
+                    price: "3.45",
+                },
+                {
+                    image: images.flatWhite,
+                    name: "Flat White",
+                    price: "3.45",
+                },
+                {
+                    image: images.caramelLatte,
+                    name: "Caramel Latte",
+                    price: "3.45",
+                },
+                {
+                    image: images.hazelnutLatte,
+                    name: "Hazelnut Latte",
+                    price: "3.45",
+                },
+            ]
+        },
 
     ])
     const [event, setEvent] = useState([
@@ -245,6 +353,21 @@ export default function OutletDetails() {
         {
             image: images.eventImg3,
             name: "Cupping",
+            date: "27 Jan 2023",
+        },
+        {
+            image: images.eventImg1,
+            name: "Barista Lessons",
+            date: "27 Jan 2023",
+        },
+        {
+            image: images.eventImg1,
+            name: "Barista Lessons",
+            date: "27 Jan 2023",
+        },
+        {
+            image: images.eventImg1,
+            name: "Barista Lessons",
             date: "27 Jan 2023",
         },
         {
@@ -296,6 +419,73 @@ export default function OutletDetails() {
             status: "Completed",
         },
     ])
+
+    let settings = {
+        button:false,
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 8,
+        slidesToScroll: 4,
+        initialSlide: 0,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      };
+      let settingsTwo = {
+        button:false,
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        initialSlide: 0,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      };
     return (
         <div className='md:pl-[18%] sm:pl-[19%] pl-[22%] py-6 px-2'>
             <div className='flex justify-between items-center mb-4 md:6 lg:mb-10'>
@@ -304,7 +494,7 @@ export default function OutletDetails() {
                 </div>
                 <div className='text-xl md:text-2xl font-semibold'>Deatails</div>
                 <div className=' cursor-pointer active:opacity-50 bg-gradient-to-r from-green to-darkerGreen text-white text-xs sm:text-base px-2 md:px-6 py-2 rounded-md font-medium'>
-                    Banned Outlet
+                    Ban Outlet
                 </div>
             </div>
             <div className='flex flex-col lg:flex-row gap-2 gap-2 lg:gap-6 mb-4 md:mb-6 lg:mb-10'>
@@ -343,19 +533,21 @@ export default function OutletDetails() {
                 </div>
             </div>
             <div className='text-xl md:text-2xl font-semibold mb-2'>Menu</div>
-            <div className=' grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:flex gap-2 mt-2 mb-4 md:mb-10'>
+            <Slider {...settings} >
                 {menu.map((item, index) => (
                     <div className='relative cursor-pointer' onClick={() => openModal(index)}>
-                        <img className='rounded-xl w-full h-48 md:h-60 lg:w-52' src={item.image} />
+                        <img className='rounded-xl  h-48 md:h-60 lg:w-52' src={item.image} />
                         <div className='bg-white absolute left-5 bottom-5 px-3 py-1 rounded-3xl font-medium text-lg'>{item.name}</div>
                     </div>
                 ))}
-            </div>
+            </Slider>
             <div className='text-2xl font-semibold'>Events</div>
-            <div className='grid grid-cols-1 sm:flex flex-wrap gap-4 sm:gap-2 mt-2'>
+            <div className=' mt-2'>
+                <Slider {...settingsTwo}>
                 {event.map((item, index) => (
-                    <>
-                        <div className='flex justify-start gap-2 w-full sm:w-[47%] lg:w-[22%]'>
+                    <div>
+                    <div className='flex '>
+                        <div className=' flex justify-start gap-2 w-full  '>
                             <img className='h-28 rounded-xl' src={item.image}/>
                             <div className=' '>
                                 <div className='mb-6'>
@@ -370,9 +562,11 @@ export default function OutletDetails() {
                                 </div>
                             </div>
                         </div>
-                        <div className='border border-borderColor mx-4 sm:mx-0 lg:mx-4'></div>
-                    </>
+                        <div className='border border-borderColor mx-4 sm:mx-0 lg:mx-4 '></div>
+                    </div>
+                    </div>
                 ))}
+                </Slider>
             </div>
             <div className='flex items-center gap-2 md:gap-4 w-full mt-10 mb-4'>
                 <div className='text-md md:text-2xl font-semibold'>
@@ -383,15 +577,72 @@ export default function OutletDetails() {
                 </div>
             </div>
             <div className='hidden lg:block'>
+                        <div className='border-2 border-borderColor rounded-xl relative'>   
+                            <div className='grid grid-cols-6 my-2'>
+                              <div className='text-lg text-orderColor flex justify-center'>Customer Name</div>
+                               <div className='text-lg text-orderColor flex justify-center'>Order Id</div>
+                                <div className='text-lg text-orderColor flex justify-center'>Payment Method</div>
+                                 <div className='text-lg text-orderColor flex justify-center'>Amount</div>
+                                 <div className='text-lg text-orderColor flex justify-center'>Delivery Time</div>
+                              <div className='flex items-center justify-center gap-2'>
+                                <div className='text-lg text-orderColor  '>{orderStatus} </div>
+                                <img onClick={() => setDropDown(!dropDown)} className="w-4 transition-transform duration-300"
+                                 style={{ transform: dropDown ? 'rotate(180deg)' : 'rotate(0deg)' }} src={images.downArrow} />
+                            </div>
+                             {dropDown && (
+                            <div className='border-2 border-borderColor rounded-xl absolute right-16 top-10  px-6 py-2  bg-white z-10'>
+                                <div className='flex justify-center items-center gap-2 my-2'>
+                                    <div onClick= {()=>{setOrderStatus("All");setDropDown()}} className='text-lg'>All</div>
+                                </div>
+                                <div className='border border-borderColor'></div>
+                                <div className='flex justify-center items-center gap-2 my-2'>
+                                    <div onClick={()=>{setOrderStatus("Pending");setDropDown()}} className='text-lg'>Pending</div>
+                                </div>
+                                <div className='border border-borderColor'></div>
+                                <div className='flex justify-center items-center gap-2 my-2'>
+                                    <div onClick={()=>{setOrderStatus("Completed");setDropDown()}} className='text-lg'>Completed</div>
+                                </div>
+                                <div className='border border-borderColor'></div>
+                                <div className='flex justify-center items-center gap-2 my-2'>
+                                    <div onClick={()=>{setOrderStatus("Cancelled");setDropDown()}} className='text-lg'>Cancelled</div>
+                                </div>
+                            </div>
+                        )}
+                            </div>
+                            <div className='border border-borderColor my-2 mx-6'></div>
+                            <div>
+                                {orders.map((order, index) => (
+                                   <div key={index} className='grid grid-cols-6 my-4 mr-4'>
+                                   <div className='flex items-center justify-center gap-2'>
+                                       <div className='text-lg text-orderColor'>{index + 1}</div>
+                                       <div className='text-lg font-semibold'>{order.customerName}</div>
+                                   </div>
+                                   <div className='text-lg text-orderColor flex justify-center'>{order.customerId}</div>
+                                   <div className='text-lg text-orderColor flex justify-center'>{order.paymentMethod}</div>
+                                   <div className='text-lg text-orderColor flex justify-center'>{order.amount}</div>
+                                   <div className='text-lg text-orderColor flex justify-center'>{order.timestamp}</div>
+                                   <div className='flex justify-center'> 
+                                       <div className={`flex items-center justify-center rounded-md text-lg 
+                                       ${order.status === 'Completed' ? 'bg-lightGreen bg-opacity-10 text-lightGreen px-2' : 'bg-[#FFE6B6] bg-opacity-40 text-[#E5B300] px-5 '}`}>
+                                       {order.status === 'pending' ? 'Completed' : order.status}
+                                   </div></div>
+                                  
+                               </div>
+                                ))}
+                            </div>
+                        </div>
+                    
+                </div>
+            {/* <div className='hidden lg:block'>
                 <div className='border-2 border-borderColor rounded-xl w-[98%]'>
                     <div className='flex justify-around my-2'>
-                        <div className='text-lg text-lightGray'>Customer Name</div>
-                        <div className='text-lg text-lightGray'>Order Id</div>
-                        <div className='text-lg text-lightGray'>Payment Method</div>
-                        <div className='text-lg text-lightGray'>Amount</div>
-                        <div className='text-lg text-lightGray'>Delivery Time</div>
+                        <div className='text-lg text-orderColor'>Customer Name</div>
+                        <div className='text-lg text-orderColor'>Order Id</div>
+                        <div className='text-lg text-orderColor'>Payment Method</div>
+                        <div className='text-lg text-orderColor'>Amount</div>
+                        <div className='text-lg text-orderColor'>Delivery Time</div>
                         <div className='flex items-center gap-2'>
-                            <div className='text-lg text-lightGray'>Order Status</div>
+                            <div className='text-lg text-orderColor'>Order Status</div>
                             <img onClick={() => setDropDown(!dropDown)} className="transition-transform duration-300"
                                 style={{ transform: dropDown ? 'rotate(180deg)' : 'rotate(0deg)' }} src={images.downArrow} />
                         </div>
@@ -403,13 +654,13 @@ export default function OutletDetails() {
                                 {orders.map((order, index) => (
                                     <div key={index} className='flex justify-around my-4 mr-4'>
                                         <div className='flex items-center gap-2'>
-                                            <div className='text-lg text-lightGray'>{index + 1}</div>
+                                            <div className='text-lg text-orderColor'>{index + 1}</div>
                                             <div className='text-lg font-semibold'>{order.customerName}</div>
                                         </div>
-                                        <div className='text-lg text-lightGray'>{order.customerId}</div>
-                                        <div className='text-lg text-lightGray'>{order.paymentMethod}</div>
-                                        <div className='text-lg text-lightGray'>${order.amount}</div>
-                                        <div className='text-lg text-lightGray'>{order.timestamp}</div>
+                                        <div className='text-lg text-orderColor'>{order.customerId}</div>
+                                        <div className='text-lg text-orderColor'>{order.paymentMethod}</div>
+                                        <div className='text-lg text-orderColor'>${order.amount}</div>
+                                        <div className='text-lg text-orderColor'>{order.timestamp}</div>
                                         <div className={`flex items-center rounded-md text-lg 
                                             ${order.status === 'Completed' ? 'bg-lightGreen bg-opacity-10 text-lightGreen px-[10px]' : 'bg-[#FFE6B6] bg-opacity-40 text-[#E5B300] px-5'}`}>
                                             {order.status === 'pending' ? 'Completed' : order.status}
@@ -420,7 +671,7 @@ export default function OutletDetails() {
                         </>
                     }
                 </div>
-            </div>
+            </div> */}
             <div className='lg:hidden'>
                 <div className="border border-borderColor rounded-lg p-4 shadow-sm">
                     {orders.map((order, index) => (
@@ -499,7 +750,7 @@ export default function OutletDetails() {
                                 <img className='w-[100%] h-[15vh] md:h-[25vh] rounded-xl object-cover ' src={event[currentIndexTwo].image} />
                                 <div className='text-white absolute bottom-6 right-4 rounded-xl px-3 text-sm  backdrop-opacity-10 backdrop-invert bg-black/30'>Exclusive To Cuppa Club Members</div>
                             </div>
-                            <div className='flex flex-col sm:flex-row items-center justify-between'>
+                            <div className='flex flex-col sm:flex-row items-center justify-between mb-2'>
                                 <div className='flex w-full gap-2 justify-between sm:justify-start sm:flex-col md:w-[40%]'>
                                     <div className='text-xl md:text-2xl font-bold '>{event[currentIndexTwo].name}</div>
                                     <div className='flex items-center gap-1 md:gap-2 text-md text-textColor' >

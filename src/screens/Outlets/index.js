@@ -139,7 +139,7 @@ export default function Outlets() {
                 <div className='w-[98%]'>
                     <div className='relative mb-4 sm:mb-6 md:mb-10'>
                         <img className='absolute left-2 top-3 md:top-4 w-5 cursor-pointer' src={images.searchIcon}/>
-                        <input placeholder='search' className='w-[100%] border-2 border-borderColor rounded-xl cursor-pointer p-2 pl-8 text-md md:text-xl outline-none' 
+                        <input placeholder='search' className='w-[100%] border-2 border-borderColor rounded-xl cursor-pointer bg-transparent p-2 pl-8 text-md md:text-xl outline-none' 
                         onChange={(e) => setSearch(e.target.value)}/>
                     </div>
                     <div className='flex justify-between relative mb-2'>
@@ -182,13 +182,10 @@ export default function Outlets() {
                                     <div className='text-md md:text-xl font-semibold'>Havana Cafe</div>
                                     <div className='text-md md:text-xl'>Open</div>
                                 </div>
-                                <div className='flex items-center justify-between my-2'>
+                                <div className='my-2'>
                                     <div className='flex item-center gap-1'>
                                         <img className='w-4 object-contain md:w-5' src={images.locationIcon}/>
                                         <div className='text-md md:text-xl text-lightGray'>NY,Newyork</div>
-                                    </div>
-                                    <div>
-                                        <img className='h-4 md:h-6' src={images.dotIcon}/>
                                     </div>
                                 </div>
                             </div>

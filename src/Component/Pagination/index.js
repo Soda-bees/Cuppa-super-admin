@@ -67,7 +67,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className={`hidden md:flex justify-center items-center m-8  `}>
+    <div className={`hidden md:flex justify-center items-center py-6  `}>
       <ul className={`flex items-center justify-between`}>
         <li
           className={` flex items-center cursor-pointer h-[20px]`}
