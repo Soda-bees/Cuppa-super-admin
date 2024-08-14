@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   display: none;
@@ -9,5 +10,9 @@
 
 .slick-slide > div {
   margin: 0 5px;
-}
 
+}
+.slick-track {
+  margin-left: 0 !important ;
+  margin-right: 0 !important ;
+}

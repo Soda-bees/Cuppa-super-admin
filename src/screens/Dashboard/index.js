@@ -567,6 +567,7 @@ export default function Dashboard() {
         //         },
         //     ]
         // },
+        
 
     ]);
 
@@ -575,11 +576,16 @@ export default function Dashboard() {
     };
 
     let settings = {
+        // className:"bg-red-500 mx-auto",
+        autoplay:true,
+        arrows:false,
         dots: false,
         infinite: false,
         speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
+        // slidesToShow: 5,
+        // slidesToScroll: 4,
+        slidesToShow: Math.min(5, cafes.length),
+        slidesToScroll: Math.min(4, cafes.length),
         initialSlide: 0,
         responsive: [
             {
@@ -714,11 +720,11 @@ export default function Dashboard() {
                 <Slider {...settings} >
                     {cafes.map((item, index) => (
                         <div key={index}
-                            className={`cursor-pointer border-2 rounded-xl p-4 ${selectedCafe?._id === item?._id ? 'border-darkerGreen' : 'border-borderColor'}`}
+                            className={`cursor-pointer border-2 rounded-xl p-4  ${selectedCafe?._id === item?._id ? 'border-darkerGreen' : 'border-borderColor'}`}
                             onClick={() => handleClick(item)}
                         >
                             <div className='w-full relative'>
-                                <img className='rounded-xl w-[100%] min-h-[240px] object-cover' src={item?.outletCover} alt={item?.outletName} />
+                                <img className='rounded-xl w-[100%] min-h-[240px] min-h-[300px] max-h-[300px] object-cover' src={item?.outletCover} alt={item?.outletName} />
                                 <div className='flex justify-center items-center gap-1 bg-white rounded-xl absolute left-2 bottom-2 px-2 backdrop-blur-xl bg-white/30'>
                                     <img className='w-3 md:w-4' src={images.starIcon} alt='Star Icon' />
                                     <span className='text-xs sm:text-sm md:text-lg font-semibold text-white'>{"item.rating"}</span>
