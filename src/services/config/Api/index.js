@@ -10,3 +10,16 @@ export const Signin = async (body) => {
         return error
     }
 }
+
+export const handleGetAllOutlets = async (token) => {
+    try {
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Authorization ${token}`
+        }
+        const response = await axios.get(`${baseURL}user/getAllCafes`, { headers })
+        return response?.data
+    } catch (error) {
+        return error
+    }
+}
