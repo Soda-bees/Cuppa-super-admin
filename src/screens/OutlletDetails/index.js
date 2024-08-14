@@ -450,6 +450,7 @@
         ])
 
         let settings = {
+            arrows:false,
             dots: false,
             infinite: false,
             speed: 500,
@@ -482,6 +483,7 @@
             ]
         };
         let settingsTwo = {
+            arrows:false,
             dots: false,
             infinite: false,
             speed: 500,
@@ -515,18 +517,25 @@
         };
 
         let sliderRef = useRef(null);
+        let sliderRefTwo = useRef(null);
         const next = () => {
             sliderRef.slickNext();
         };
         const previous = () => {
             sliderRef.slickPrev();
         };
+        const nextTwo = () => {
+            sliderRefTwo.slickNext();
+        };
+        const previousTwo = () => {
+            sliderRefTwo.slickPrev();
+        };
         
         return (
             <div className='md:pl-[18%] sm:pl-[19%] pl-[22%] py-6 px-2'>
                 <div className='flex justify-between items-center mb-4 md:6 lg:mb-10'>
                     <div>
-                        <img className='w-6 md:w-8 cursor-pointer' src={images.backBtn} onClick={() => navigate('/outlets')} />
+                        <img className='w-6 md:w-8 cursor-pointer active:opacity-50' src={images.backBtn} onClick={() => navigate('/outlets')} />
                     </div>
                     <div className='text-xl md:text-2xl font-semibold'>Deatails</div>
                     <div className=' cursor-pointer active:opacity-50 bg-gradient-to-r from-green to-darkerGreen text-white text-xs sm:text-base px-2 md:px-6 py-2 rounded-md font-medium'>
@@ -571,9 +580,9 @@
                 <div className='flex justify-between items-center mb-4  '>
                 <div className='text-xl md:text-2xl font-semibold'>Menu</div>
                 <div className='flex items-center gap-4 mr-4'>
-                <img className='w-8 active:opacity-50'  src={images.backBtn} onClick={previous} />
-                <img className='w-8 active:opacity-50' src={images.nextArrow} onClick={next}/>
-            </div>
+                <img className='w-8 cursor-pointer active:opacity-50'  src={images.backBtn} onClick={previous} />
+                <img className='w-8 cursor-pointer active:opacity-50' src={images.nextArrow} onClick={next}/>
+                 </div>
                 </div>
                 
             <Slider {...settings}    
@@ -588,9 +597,16 @@
                         </div>
                     ))}
                 </Slider>
-                <div className='text-2xl font-semibold'>Events</div>
-                <div className=' mt-2'>
-                    <Slider {...settingsTwo}>
+                <div className='flex justify-between items-center mb-4 mt-4  '>
+                <div className='text-xl md:text-2xl font-semibold'>Events</div>
+                <div className='flex items-center gap-4 mr-4'>
+                <img className='w-8 active:opacity-50 cursor-pointer'  src={images.backBtn} onClick={previousTwo} />
+                <img className='w-8 active:opacity-50 cursor-pointer' src={images.nextArrow} onClick={nextTwo}/>
+                 </div>
+                </div>
+                <div className='mt-4'>
+                    <Slider {...settingsTwo} ref={slider => {
+            sliderRefTwo = slider;}}>
                     {event.map((item, index) => (
                         <div>
                         <div className='flex '>
@@ -672,8 +688,8 @@
                                         <div className={`flex items-center justify-center rounded-md text-lg 
                                         ${order.status === 'Completed' ? 'bg-lightGreen bg-opacity-10 text-lightGreen px-2' : 'bg-[#FFE6B6] bg-opacity-40 text-[#E5B300] px-5 '}`}>
                                         {order.status === 'pending' ? 'Completed' : order.status}
-                                    </div></div>
-                                    
+                                    </div>
+                                    </div>
                                 </div>
                                     ))}
                                 </div>
