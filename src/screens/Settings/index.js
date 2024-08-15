@@ -5,25 +5,31 @@ import { useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { clearAuthToken } from '../../store/authTokenSlice';
+import { clearAuthToken, selectAuthToken } from '../../store/authTokenSlice';
 import { clearAdminData, selectAdminData } from '../../store/adminDataSlice';
+import {  UpdatePassword } from '../../services/config/Api';
+import "react-toastify/dist/ReactToastify.css";
+import { handleError } from '../../Component/ShowError';
+import Loader from '../../Component/Loader';
+
 
 export default function Settings() {
 
     const adminData = useSelector(selectAdminData)
-
     const [adminName, setAdminName] = useState("")
     const [email, setEmail] = useState("")
     const [contact, setContact] = useState("")
-    const [currentPasswaord, setCurrentPasswaord] = useState("")
-    const [newPasswaord, setNewPasswaord] = useState("")
-    const [confirmPasswaord, setConfirmPasswaord] = useState("")
+    const [password, setPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
     const [rememberLogin, setRememberLogin] = useState(false)
     const [twoFactor, setTwoFactor] = useState(false)
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [loader, setLaoder] = useState(false)
 
+    const token = useSelector(selectAuthToken)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -32,6 +38,16 @@ export default function Settings() {
         dispatch(clearAdminData())
     };
 
+    const handleUpdatePassword = async() =>{
+        try {
+            const body = {password, newPassword}
+            const response = await UpdatePassword(token,body)    
+        } catch (error) {
+            return handleError(error.message)
+        }
+    }
+
+    
     return (
         <div className="xl:pl-[17%] md:pl-[19%] sm:pl-[19%] pl-[22%] py-4 ">
             <div className="text-xl sm:text-2xl md:text-3xl font-semibold mt-10">
@@ -96,7 +112,7 @@ export default function Settings() {
                     Security
                 </div>
                 <div>
-                    <div className="px-6 py-1 bg-gradient-to-r from-green to-darkerGreen text-white rounded-xl cursor-pointer active:opacity-50">
+                    <div onClick={handleUpdatePassword} className="px-6 py-1 bg-gradient-to-r from-green to-darkerGreen text-white rounded-xl cursor-pointer active:opacity-50">
                         Save
                     </div>
                 </div>
@@ -105,7 +121,7 @@ export default function Settings() {
                 <div className="text-md sm:text-xl font-semibold ml-5 md:ml-7 xl:ml-10 mb-2">
                     Create Your New Password
                 </div>
-                <div className="flex flex-col xl:flex-row gap-2 xl:gap-4 justify-center">
+                <div className="flex flex-col xl:flex-row gap-2 xl:gap-4 ml-5 md:ml-7 xl:ml-10  ">
                     <div className="w-full flex flex-col items-center xl:w-[45%]">
                         <div className="w-[90%] xl:w-[100%] bg-inputBg rounded-xl xl:mt-2 p-2 relative">
                             <div className="text-sm md:text-base text-textColor">
@@ -114,7 +130,7 @@ export default function Settings() {
                             <input
                                 className="cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md bg-inputBg"
                                 type={showCurrentPassword ? "text" : "password"}
-                                onChange={(e) => setCurrentPasswaord(e.target.value)}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <img
                                 className="w-6 absolute top-7 md:top-10 right-4 cursor-pointer"
@@ -129,7 +145,7 @@ export default function Settings() {
                             <input
                                 className="cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md bg-inputBg"
                                 type={showNewPassword ? "text" : "password"}
-                                onChange={(e) => setNewPasswaord(e.target.value)}
+                                onChange={(e) => setNewPassword(e.target.value)}
                             />
                             <img
                                 className="w-6 absolute top-7 md:top-10 right-4 cursor-pointer"
@@ -144,7 +160,7 @@ export default function Settings() {
                             <input
                                 className="cursor-pointer w-[100%] outline-none text-sm md:text-lg bg-inputBg"
                                 type={showConfirmPassword ? "text" : "password"}
-                                onChange={(e) => setConfirmPasswaord(e.target.value)}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
                             />
                             <img
                                 className="w-6 absolute top-7 md:top-10 right-4 cursor-pointer"
@@ -153,7 +169,7 @@ export default function Settings() {
                             />
                         </div>
                     </div>
-                    <div className="w-full flex flex-col items-center xl:w-[45%]">
+                    {/* <div className="w-full flex flex-col items-center xl:w-[45%]">
                         <div className="w-[90%] xl:w-[100%] bg-inputBg rounded-xl xl:mt-2 p-4  flex items-center justify-between">
                             <div className="text-xs sm:text-sm md:text-lg font-semibold">
                                 Remember Login Details
@@ -196,7 +212,7 @@ export default function Settings() {
                                 ></div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="w-[95%] sm:w-[60%] flex justify-end mt-4">

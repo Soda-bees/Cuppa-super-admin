@@ -14,7 +14,9 @@
         const [currentIndexTwo, setCurrentIndexTwo] = useState(null);
         const [orderStatus, setOrderStatus] = useState("Order Status");
         const navigate = useNavigate()
-
+        let sliderRef = useRef(null);
+        let sliderRefTwo = useRef(null);
+        
         const openModal = (index) => {
             setCurrentIndex(index);
             setIsModalOpen(true);
@@ -377,34 +379,6 @@
             },
 
         ])
-        
-        
-        const NextArrow = (props) => {
-            const { className, style, onClick } = props;
-            return (
-                <div
-                    className={className}
-                    style={{
-                        ...style,
-                        right: 10,
-                        zIndex: 1,
-                        borderRadius: '50%',
-                        width: '30px',
-                        height: '30px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                    }}
-                    onClick={onClick}
-                >
-                    {/* Right Arrow Symbol */}
-                </div>
-            );
-        };
-
-
-
 
         const [orders, setOrders] = useState([
             {
@@ -516,8 +490,7 @@
             ]
         };
 
-        let sliderRef = useRef(null);
-        let sliderRefTwo = useRef(null);
+     
         const next = () => {
             sliderRef.slickNext();
         };

@@ -23,3 +23,17 @@ export const handleGetAllOutlets = async (token) => {
         return error
     }
 }
+
+export const UpdatePassword = async (token, body) => {
+    try {
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` 
+        };
+        const response = await axios.post(`${baseURL}superAdmin/updatePassword`, body, { headers });
+        return response?.data;
+    } catch (error) {
+        return error; 
+    }
+};
+
