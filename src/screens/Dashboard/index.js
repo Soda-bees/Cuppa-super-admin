@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState , useRef } from 'react'
 import images from '../../assets'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -26,6 +26,7 @@ export default function Dashboard() {
     const [selectedCafe, setSelectedCafe] = useState();
     const [orderStatus, setOrderStatus] = useState("All");
     const [cafes, setCafes] = useState([]);
+    let sliderRef = useRef(null);
 
     const handleClick = (item) => {
         setSelectedCafe(item);
@@ -49,7 +50,7 @@ export default function Dashboard() {
                 }
             },
             {
-                breakpoint: 600,
+                breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
@@ -57,7 +58,7 @@ export default function Dashboard() {
                 }
             },
             {
-                breakpoint: 480,
+                breakpoint: 767,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1
@@ -167,7 +168,13 @@ export default function Dashboard() {
     const formatDate = (date) => {
         return moment(date).format('MMM-DD-YYYY h:mm A');
     };
-
+   
+    const next = () => {
+        sliderRef.slickNext();
+    };
+    const previous = () => {
+        sliderRef.slickPrev();
+    };
     return (
         <div className='md:pl-[18%] sm:pl-[19%] pl-[22%] py-4 box-border'>
             <div className='w-[98%]'>
@@ -219,11 +226,21 @@ export default function Dashboard() {
                         <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>Active Outlets</div>
                     </div>
                 </div>
-                <div className='text-xl md:text-2xl font-semibold mb-4'>Outlets</div>
-                <Slider {...settings} >
+                <div className='flex justify-between items-center mb-4  '>
+                <div className='text-xl md:text-2xl font-semibold'>Outlets</div>
+                <div className='flex items-center gap-4 mr-4'>
+                <img className='w-6 md:w-8 cursor-pointer active:opacity-50'  src={images.backBtn} onClick={previous} />
+                <img className='w-6  md:w-8 cursor-pointer active:opacity-50' src={images.nextArrow} onClick={next}/>
+                 </div>
+                </div>
+                {/* <div className='text-xl md:text-2xl font-semibold mb-4'>Outlets</div> */}
+                <Slider {...settings} 
+                ref={slider => {
+                    sliderRef = slider;}}
+                    >
                     {cafes.map((item, index) => (
                         <div key={index}
-                            className={`cursor-pointer border-2 rounded-xl p-4  ${selectedCafe?._id === item?._id ? 'border-darkerGreen' : 'border-borderColor'}`}
+                            className={`cursor-pointer border-2 rounded-xl p-4 mb-4 ${selectedCafe?._id === item?._id ? 'border-darkerGreen' : 'border-borderColor'}`}
                             onClick={() => handleClick(item)}
                         >
                             <div className='w-full relative'>
@@ -255,10 +272,10 @@ export default function Dashboard() {
                                 {`${selectedCafe?.orders?.length} orders`}
                             </div>
                         </div>
-                        <div className='hidden lg:block'>
+                        <div className='hidden lg:block' >
                             {selectedCafe !== null && (
                                 <div className='border-2 border-borderColor rounded-xl relative'>
-                                    <div className='grid grid-cols-6 my-2'>
+                                    <div className='grid grid-cols-6  my-2'>
                                         <div className='text-lg text-orderColor flex justify-center'>Customer Name</div>
                                         <div className='text-lg text-orderColor flex justify-center'>Order Id</div>
                                         <div className='text-lg text-orderColor flex justify-center'>Payment Method</div>
@@ -315,7 +332,7 @@ export default function Dashboard() {
                                                     <div className='text-lg text-orderColor flex justify-center'>{order?.paymentMethod}</div>
                                                     <div className='text-lg text-orderColor flex justify-center'>{`$ ${order?.totalAmount}`}</div>
                                                     <div className='text-lg text-orderColor flex justify-center'>{formatDate(order?.createdAt)}</div>
-                                                    <div className='flex justify-center'>
+                                                    <div className='flex justify-center items-center'>
                                                         <div
                                                             className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-md bg-pendingBG text-lightGreen px-5 py-1" :
                                                                 order?.status === "Ready" ? "flex items-center justify-center rounded-md text-md bg-readyBG text-readyText px-5 py-1" :
@@ -334,6 +351,36 @@ export default function Dashboard() {
                         </div>
                     </div>
                 }
+                <div className='lg:hidden'>
+                     <div className="border border-borderColor rounded-lg p-4 shadow-sm ">
+                        {selectedCafe?.orders.map((order, index) => (
+                            <div key={index} className="border-t border-borderColor">
+                                <div className='flex gap-2 my-2'>
+                                    <div className='mt-0.5 sm:text-base md:text-lg text-orderColor'>{index + 1}</div>
+                                    <div className=' w-full flex flex-col gap-1'>
+                                        <div className='flex justify-between'>
+                                            <div className='text-lg sm:text-xl md:text-2xl font-semibold'>{order?.customerData?.userName}</div>
+                                            <div className='text-lg sm:text-xl md:text-2xl font-semibold'>{`$ ${order?.totalAmount}`}</div>
+                                        </div>
+                                        <div className='flex justify-between items-center'>
+                                            <div className='text-xs sm:text-base md:text-lg text-orderColor'>{formatDate(order?.createdAt)} - {order.paymentMethod}</div>
+                                            <div
+                                                            className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-sm bg-pendingBG text-lightGreen px-2 py-1" :
+                                                                order?.status === "Ready" ? "flex items-center justify-center rounded-md text-sm bg-readyBG text-readyText px-2 py-1" :
+                                                                    order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-sm bg-cancelBG text-cancleText px-2 py-1" :
+                                                                        order?.status === "Picked" ? "flex items-center justify-center rounded-md text-sm bg-pickedBG text-pickedText px-2 py-1" :
+                                                                            order?.status === "Completed" ? "flex items-center justify-center rounded-md text-sm bg-colpletedBG text-completedText px-2 py-1" :
+                                                                                order?.status === "Preparing" && "flex items-center justify-center rounded-md text-sm bg-preparingBG text-preparingText px-2 py-1"
+                                                            }
+                                                        >{order?.status}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
             </div>
         </div>
     )

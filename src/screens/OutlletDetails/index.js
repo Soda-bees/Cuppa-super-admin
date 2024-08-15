@@ -16,7 +16,7 @@
         const navigate = useNavigate()
         let sliderRef = useRef(null);
         let sliderRefTwo = useRef(null);
-        
+
         const openModal = (index) => {
             setCurrentIndex(index);
             setIsModalOpen(true);
@@ -553,8 +553,8 @@
                 <div className='flex justify-between items-center mb-4  '>
                 <div className='text-xl md:text-2xl font-semibold'>Menu</div>
                 <div className='flex items-center gap-4 mr-4'>
-                <img className='w-8 cursor-pointer active:opacity-50'  src={images.backBtn} onClick={previous} />
-                <img className='w-8 cursor-pointer active:opacity-50' src={images.nextArrow} onClick={next}/>
+                <img className='w-6 md:w-8 cursor-pointer active:opacity-50'  src={images.backBtn} onClick={previous} />
+                <img className='w-6 md:w-8 cursor-pointer active:opacity-50' src={images.nextArrow} onClick={next}/>
                  </div>
                 </div>
                 
@@ -573,8 +573,8 @@
                 <div className='flex justify-between items-center mb-4 mt-4  '>
                 <div className='text-xl md:text-2xl font-semibold'>Events</div>
                 <div className='flex items-center gap-4 mr-4'>
-                <img className='w-8 active:opacity-50 cursor-pointer'  src={images.backBtn} onClick={previousTwo} />
-                <img className='w-8 active:opacity-50 cursor-pointer' src={images.nextArrow} onClick={nextTwo}/>
+                <img className='w-6 md:w-8 active:opacity-50 cursor-pointer'  src={images.backBtn} onClick={previousTwo} />
+                <img className='w-6 md:w-8 active:opacity-50 cursor-pointer' src={images.nextArrow} onClick={nextTwo}/>
                  </div>
                 </div>
                 <div className='mt-4'>
@@ -590,7 +590,7 @@
                                         <div className='text-xl font-semibold'>{item.name}</div>
                                         <div className='text-textColor'>{item.date}</div>
                                     </div>
-                                    <div className='flex justify-start'>
+                                    <div className='flex justify-start items-center'>
                                         <div onClick={() => openEventModal(index)}
                                             className='cursor-pointer active:opacity-50 bg-gradient-to-r py-1 px-4 from-green to-darkerGreen text-white rounded-md flex justify-center'>
                                             Read More
