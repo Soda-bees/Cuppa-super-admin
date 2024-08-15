@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import images from '../../assets'
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../Component/Pagination";
+import { ModalContext } from '../Layout';
+import { selectAuthToken } from '../../store/authTokenSlice';
+import { useSelector } from 'react-redux';
+
 
 
 
 export default function Outlets() {
+    const { setIsLoading } = useContext(ModalContext);
+
+    const authToken = useSelector(selectAuthToken)
+
     const [search, setSearch] = useState("")
     const [dropDown, setDropDown] = useState(false)
     const navigate = useNavigate()
@@ -133,6 +141,24 @@ export default function Outlets() {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
+
+    const handleGetAllOutlets = async () => {
+        try {
+            setIsLoading(true)
+            const response = await handleGetAllOutlets(authToken)
+            console.log("get all cafy", response);
+            if (response?.success) {
+                setIsLoading(false)
+                setOutlet(response?.outlets)
+            } else {
+                setIsLoading(false)
+                console.log(response?.message);
+            }
+        } catch (error) {
+            setIsLoading(false)
+            console.log("get all cafy", error);
+        }
+    }
     return (
         <>
             <div className=' md:pl-[18%] sm:pl-[19%] pl-[22%] py-4'>

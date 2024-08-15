@@ -8,6 +8,7 @@ import { selectAdminData } from '../../store/adminDataSlice';
 import { selectAuthToken } from '../../store/authTokenSlice';
 import { handleGetAllOutlets } from '../../services/config/Api';
 import { ModalContext } from '../Layout';
+import moment from 'moment';
 
 export default function Dashboard() {
     const { setIsLoading } = useContext(ModalContext);
@@ -19,571 +20,23 @@ export default function Dashboard() {
     const [sales, setSales] = useState(0)
     const [orders, setOrders] = useState(0)
     const [outlets, setOutlets] = useState(0)
-    const [newOutlets, setNewOutlets] = useState(5)
-    const [oldOutlets, setOldOutlets] = useState(150)
-
+    const [newOutlets, setNewOutlets] = useState(0)
+    const [oldOutlets, setOldOutlets] = useState(0)
     const [dropDown, setDropDown] = useState(false)
     const [selectedCafe, setSelectedCafe] = useState();
-
     const [orderStatus, setOrderStatus] = useState("All");
-
-    const [cafes, setCafes] = useState([
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 5.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 4.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "dsjfsd fsdfsd",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 4.5,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 5.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 5.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 5.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 5.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 5.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 5.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 5.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: 'Havana Cafe',
-        //     image: images.cafeImg,
-        //     rating: 5.0,
-        //     status: 'open',
-        //     location: 'NY, Newyork',
-        //     orders: [
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Pending",
-        //         },
-        //         {
-        //             customerName: "Justin Lipshutz",
-        //             customerId: "Dsukjik414",
-        //             paymentMethod: "Cash on Delivery",
-        //             amount: "$2,50",
-        //             timestamp: "Today 05:00PM",
-        //             status: "Completed",
-        //         },
-        //     ]
-        // },
-        
-
-    ]);
+    const [cafes, setCafes] = useState([]);
 
     const handleClick = (item) => {
         setSelectedCafe(item);
     };
 
     let settings = {
-        // className:"bg-red-500 mx-auto",
-        autoplay:true,
-        arrows:false,
+        autoplay: true,
+        arrows: false,
         dots: false,
         infinite: false,
         speed: 500,
-        // slidesToShow: 5,
-        // slidesToScroll: 4,
         slidesToShow: Math.min(5, cafes.length),
         slidesToScroll: Math.min(4, cafes.length),
         initialSlide: 0,
@@ -627,6 +80,8 @@ export default function Dashboard() {
                 setOutlets(response?.outlets?.length)
                 calculateAllOrders(response?.outlets)
                 calculateTotalSales(response?.outlets)
+                getActiveOutletsCount(response?.outlets)
+                getNewOutletsCount(response?.outlets)
                 setCafes(response?.outlets)
             } else {
                 setIsLoading(false)
@@ -646,19 +101,71 @@ export default function Dashboard() {
     }
 
     const calculateTotalSales = async (outlets) => {
-        // Use reduce to calculate the total sales amount
         const totalSales = outlets.reduce((total, outlet) => {
-            // Sum up the totalAmount for each order in the outlet
             const outletTotal = outlet.orders
                 ? outlet.orders.reduce((sum, order) => sum + parseFloat(order.totalAmount), 0)
                 : 0;
 
             return total + outletTotal;
         }, 0);
-
-        // return totalSales;
-        console.log(totalSales);
         setSales(totalSales)
+    };
+
+    const handleRating = cafe => {
+        if (cafe?.reviews && cafe?.reviews?.length > 0) {
+            const totalRating = cafe.reviews.reduce(
+                (sum, review) => sum + parseFloat(review.rating),
+                0,
+            );
+            const averageRating = (totalRating / cafe.reviews.length).toFixed(1);
+            return averageRating;
+        } else {
+            return 0;
+        }
+    };
+
+    const getShortId = (id) => {
+        if (!id) return '';
+        return id.toString().slice(0, 8);
+    }
+
+    const handleStatus = openHours => {
+        const [startTime, endTime] = openHours.split(' - ');
+        const currentTime = moment();
+        const openTime = moment(startTime, 'hh:mm A');
+        let closeTime = moment(endTime, 'hh:mm A');
+        if (closeTime.isBefore(openTime)) {
+            closeTime.add(1, 'day');
+        }
+        if (
+            currentTime.isBetween(openTime, closeTime) ||
+            currentTime.isSame(openTime)
+        ) {
+            return "open"
+        } else {
+            return 'close'
+        }
+    };
+
+    const getActiveOutletsCount = (outlets) => {
+        const activeOutlets = outlets.filter(outlet => outlet.active).length;
+        setOldOutlets(activeOutlets)
+    };
+
+    const getNewOutletsCount = (outlets) => {
+        const sevenDaysAgo = moment().subtract(7, 'days');
+
+        const newOutlets = outlets?.filter(outlet => {
+            const createdAt = moment(outlet?.createdAt);
+            return createdAt.isAfter(sevenDaysAgo);
+        }).length;
+        console.log("newOutlets=--==--=", newOutlets);
+
+        setNewOutlets(newOutlets)
+    };
+
+    const formatDate = (date) => {
+        return moment(date).format('MMM-DD-YYYY h:mm A');
     };
 
     return (
@@ -681,7 +188,6 @@ export default function Dashboard() {
                             <span className='font-semibold text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-darkerBlue'>${sales}</span>
                         </div>
                         <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>Total Sales</div>
-                        {/* <div className='text-md my-1 sm:my-2 text-lightGray'>+8% from yesterday</div> */}
                     </div>
                     <div className='border-2 border-borderColor rounded-xl w-full p-4 sm:p-6 md:p-4 lg:p-2 xl:p-6'>
                         <div className='w-full flex items-center gap-4 lg:gap-2 xl:gap-4 my-1 sm:my-2'>
@@ -689,7 +195,6 @@ export default function Dashboard() {
                             <span className='font-semibold text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-darkerBlue'>{orders}</span>
                         </div>
                         <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>Total Order</div>
-                        {/* <div className='text-md my-1 sm:my-2 text-lightGray'>+5% from yesterday</div> */}
                     </div>
                     <div className='border-2 border-borderColor rounded-xl w-full p-4 sm:p-6 md:p-4 lg:p-2 xl:p-6'>
                         <div className='w-full flex items-center gap-4 lg:gap-2 xl:gap-4 my-1 sm:my-2'>
@@ -697,7 +202,6 @@ export default function Dashboard() {
                             <span className='font-semibold text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-darkerBlue'>{outlets}</span>
                         </div>
                         <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>Total Outlets</div>
-                        {/* <div className='text-md my-1 sm:my-2 text-lightGray'>+1.2% from yesterday</div> */}
                     </div>
                     <div className='border-2 border-borderColor rounded-xl w-full p-4 sm:p-6 md:p-4 lg:p-2 xl:p-6'>
                         <div className='w-full flex items-center gap-4 lg:gap-2 xl:gap-4 my-1 sm:my-2'>
@@ -713,7 +217,6 @@ export default function Dashboard() {
                             <span className='font-semibold text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-darkerBlue'>{oldOutlets}</span>
                         </div>
                         <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>Active Outlets</div>
-                        {/* <div className='text-md my-1 sm:my-2 text-lightGray'>0.5% from yesterday</div> */}
                     </div>
                 </div>
                 <div className='text-xl md:text-2xl font-semibold mb-4'>Outlets</div>
@@ -727,12 +230,12 @@ export default function Dashboard() {
                                 <img className='rounded-xl w-[100%] min-h-[240px] min-h-[300px] max-h-[300px] object-cover' src={item?.outletCover} alt={item?.outletName} />
                                 <div className='flex justify-center items-center gap-1 bg-white rounded-xl absolute left-2 bottom-2 px-2 backdrop-blur-xl bg-white/30'>
                                     <img className='w-3 md:w-4' src={images.starIcon} alt='Star Icon' />
-                                    <span className='text-xs sm:text-sm md:text-lg font-semibold text-white'>{"item.rating"}</span>
+                                    <span className='text-xs sm:text-sm md:text-lg font-semibold text-white'>{handleRating(item)}</span>
                                 </div>
                             </div>
                             <div className='flex justify-between items-center mt-2'>
                                 <div className='text-md sm:text-lg md:text-xl font-semibold'>{item?.outletName}</div>
-                                <div className='text-md sm:text-lg md:text-xl'>{"item.status"}</div>
+                                <div className='text-md sm:text-lg md:text-xl'>{handleStatus(item?.openHours)}</div>
                             </div>
                             <div className='flex items-center gap-2'>
                                 <img className='h-4 sm:h-5 md:h-6' src={images.locationIcon} alt='Location Icon' />
@@ -746,11 +249,9 @@ export default function Dashboard() {
                     <div>
                         <div className='flex items-center gap-2 md:gap-4 w-full my-4'>
                             <div className='text-md md:text-2xl font-semibold'>
-                                {/* Outlet {selectedCafe + 1} : Orders */}
                                 {`${selectedCafe?.outletName} Orders`}
                             </div>
                             <div className='rounded-2xl text-md px-2 md:px-4 py-1 text-white bg-gradient-to-r from-green to-darkerGreen'>
-                                {/* {cafes[selectedCafe]?.orders?.length} order{cafes[selectedCafe].orders.length > 1 ? 's' : ''} */}
                                 {`${selectedCafe?.orders?.length} orders`}
                             </div>
                         </div>
@@ -762,7 +263,7 @@ export default function Dashboard() {
                                         <div className='text-lg text-orderColor flex justify-center'>Order Id</div>
                                         <div className='text-lg text-orderColor flex justify-center'>Payment Method</div>
                                         <div className='text-lg text-orderColor flex justify-center'>Amount</div>
-                                        <div className='text-lg text-orderColor flex justify-center'>Delivery Time</div>
+                                        <div className='text-lg text-orderColor flex justify-center'>Order Time</div>
                                         <div className='flex items-center justify-center gap-2'>
                                             <div className='text-lg text-orderColor cursor-pointer' onClick={() => setDropDown(!dropDown)}>{orderStatus === "All" ? "Order Status" : orderStatus} </div>
                                             <img className="w-4 transition-transform duration-300"
@@ -785,6 +286,18 @@ export default function Dashboard() {
                                                 <div onClick={() => { setOrderStatus("Cancelled"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
                                                     <div className='text-lg'>Cancelled</div>
                                                 </div>
+                                                <div className='border border-borderColor'></div>
+                                                <div onClick={() => { setOrderStatus("Ready"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>Ready</div>
+                                                </div>
+                                                <div className='border border-borderColor'></div>
+                                                <div onClick={() => { setOrderStatus("Picked"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>Picked</div>
+                                                </div>
+                                                <div className='border border-borderColor'></div>
+                                                <div onClick={() => { setOrderStatus("Preparing"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>Preparing</div>
+                                                </div>
                                             </div>
                                         )}
                                     </div>
@@ -796,22 +309,23 @@ export default function Dashboard() {
                                                 <div key={index} className='grid grid-cols-6 my-4 mr-4'>
                                                     <div className='flex items-center justify-center gap-2'>
                                                         <div className='text-lg text-orderColor'>{index + 1}</div>
-                                                        <div className='text-lg font-semibold'>{order?.customerName}</div>
+                                                        <div className='text-lg font-semibold'>{order?.customerData?.userName}</div>
                                                     </div>
-                                                    <div className='text-lg text-orderColor flex justify-center'>{order?._id                                                    }</div>
+                                                    <div className='text-lg text-orderColor flex justify-center'>{getShortId(order?._id)}</div>
                                                     <div className='text-lg text-orderColor flex justify-center'>{order?.paymentMethod}</div>
                                                     <div className='text-lg text-orderColor flex justify-center'>{`$ ${order?.totalAmount}`}</div>
-                                                    <div className='text-lg text-orderColor flex justify-center'>{order?.timestamp}</div>
+                                                    <div className='text-lg text-orderColor flex justify-center'>{formatDate(order?.createdAt)}</div>
                                                     <div className='flex justify-center'>
                                                         <div
-                                                            // className={order?.status === "Pending" ? "" : order?.status === "" ? "" : order?.status === "" && ""}
+                                                            className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-md bg-pendingBG text-lightGreen px-5 py-1" :
+                                                                order?.status === "Ready" ? "flex items-center justify-center rounded-md text-md bg-readyBG text-readyText px-5 py-1" :
+                                                                    order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-md bg-cancelBG text-cancleText px-5 py-1" :
+                                                                        order?.status === "Picked" ? "flex items-center justify-center rounded-md text-md bg-pickedBG text-pickedText px-5 py-1" :
+                                                                            order?.status === "Completed" ? "flex items-center justify-center rounded-md text-md bg-colpletedBG text-completedText px-5 py-1" :
+                                                                                order?.status === "Preparing" && "flex items-center justify-center rounded-md text-md bg-preparingBG text-preparingText px-5 py-1"
+                                                            }
                                                         >{order?.status}</div>
-                                                        {/* <div className={`flex items-center justify-center rounded-md text-lg 
-                                                    ${order.status === 'Completed' ? 'bg-lightGreen bg-opacity-10 text-lightGreen px-2' : 'bg-[#FFE6B6] bg-opacity-40 text-[#E5B300] px-5 '}`}>
-                                                            {order.status === 'pending' ? 'Completed' : order.status}
-                                                        </div> */}
                                                     </div>
-
                                                 </div>
                                             ))}
                                     </div>
@@ -820,31 +334,6 @@ export default function Dashboard() {
                         </div>
                     </div>
                 }
-                <div className='lg:hidden'>
-                    {selectedCafe !== null && (
-                        <div className="border border-borderColor rounded-lg p-4 shadow-sm">
-                            {cafes[selectedCafe]?.orders.map((order, index) => (
-                                <div key={index} className="border-t border-borderColor">
-                                    <div className='flex gap-2 my-2'>
-                                        <div className='mt-0.5 sm:text-base md:text-lg text-orderColor'>{index + 1}</div>
-                                        <div className=' w-full flex flex-col gap-1'>
-                                            <div className='flex justify-between'>
-                                                <div className='text-base sm:text-lg md:text-2xl font-semibold'>{order.customerName}</div>
-                                                <div className='text-lg sm:text-xl md:text-2xl font-semibold'>{order.amount}</div>
-                                            </div>
-                                            <div className='flex justify-between items-center'>
-                                                <div className='text-xs sm:text-base md:text-lg text-orderColor'> {order.timestamp} - {order.paymentMethod}</div>
-                                                <div className={`flex items-center rounded-md text-sm sm:text-base md:text-lg ${order.status === 'Completed' ? 'px-2 py-1 bg-lightGreen bg-opacity-10 text-lightGreen' : 'px-5 py-1 bg-[#FFE6B6] bg-opacity-30 text-[#E5B300]'}`}>
-                                                    {order.status === 'pending' ? 'Completed' : order.status}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
             </div>
         </div>
     )

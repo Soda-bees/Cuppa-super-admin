@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const baseURL = "http://192.168.100.111:8080/"
+export const baseURL = "http://192.168.100.112:8080/"
 
 export const Signin = async (body) => {
     try {
@@ -17,7 +17,7 @@ export const handleGetAllOutlets = async (token) => {
             "Content-Type": "application/json",
             "Authorization": `Authorization ${token}`
         }
-        const response = await axios.get(`${baseURL}user/getAllCafes`, { headers })
+        const response = await axios.get(`${baseURL}superAdmin/getAllCafes`, { headers })
         return response?.data
     } catch (error) {
         return error
