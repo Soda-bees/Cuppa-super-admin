@@ -37,3 +37,16 @@ export const UpdatePassword = async (token, body) => {
     }
 };
 
+export const updateProfile = async (token, body) => {
+    try {
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` 
+        };
+        const response = await axios.post(`${baseURL}superAdmin/updateAdminDetails`, body, { headers });
+        return response?.data;
+    } catch (error) {
+        return error; 
+    }
+};
+

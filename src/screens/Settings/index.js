@@ -1,21 +1,25 @@
 
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import images from '../../assets'
 import { useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { clearAuthToken, selectAuthToken } from '../../store/authTokenSlice';
-import { clearAdminData, selectAdminData } from '../../store/adminDataSlice';
-import {  UpdatePassword } from '../../services/config/Api';
+import { clearAdminData, selectAdminData, setAdminData } from '../../store/adminDataSlice';
+import { UpdatePassword, updateProfile } from '../../services/config/Api';
 import "react-toastify/dist/ReactToastify.css";
 import { handleError } from '../../Component/ShowError';
 import Loader from '../../Component/Loader';
+import { ModalContext } from '../Layout';
 
 
 export default function Settings() {
+    const { setIsLoading } = useContext(ModalContext);
 
     const adminData = useSelector(selectAdminData)
+    const authToken = useSelector(selectAuthToken)
+
     const [adminName, setAdminName] = useState("")
     const [email, setEmail] = useState("")
     const [contact, setContact] = useState("")
@@ -29,6 +33,13 @@ export default function Settings() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [loader, setLaoder] = useState(false)
 
+    useEffect(() => {
+        if (adminData) {
+            setAdminName(adminData?.name)
+            setEmail(adminData?.email)
+        }
+    }, [])
+
     const token = useSelector(selectAuthToken)
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -38,16 +49,56 @@ export default function Settings() {
         dispatch(clearAdminData())
     };
 
-    const handleUpdatePassword = async() =>{
+    const handleUpdatePassword = async () => {
         try {
-            const body = {password, newPassword}
-            const response = await UpdatePassword(token,body)    
+            if (newPassword !== confirmPassword) {
+                return handleError("Password must be same")
+            }
+            setIsLoading(true)
+            const body = { password, newPassword }
+            const response = await UpdatePassword(token, body)
+            if (response?.success) {
+                setIsLoading(false)
+                setPassword("")
+                setNewPassword("");
+                setConfirmPassword('')
+                alert("Password update successfully")
+            } else {
+                setIsLoading(false)
+                return handleError(response?.message)
+            }
         } catch (error) {
+            setIsLoading(false)
             return handleError(error.message)
         }
     }
 
-    
+    const handleUpdateProfile = async () => {
+        try {
+            if (!adminName) {
+                return handleError("Please enter name")
+            }
+            setIsLoading(true)
+            const body = {
+                name: adminName
+            }
+            const response = await updateProfile(authToken, body)
+            console.log("update profile-=-=>", response);
+            if (response?.success) {
+                setIsLoading(false)
+                dispatch(setAdminData(response?.updatedAdmin))
+                alert("Profile updated successfully")
+            } else {
+                setIsLoading(false)
+                return handleError(response?.message)
+            }
+        } catch (error) {
+            setIsLoading(false)
+            handleError(error?.message)
+        }
+    }
+
+
     return (
         <div className="xl:pl-[17%] md:pl-[19%] sm:pl-[19%] pl-[22%] py-4 ">
             <div className="text-xl sm:text-2xl md:text-3xl font-semibold mt-10">
@@ -62,7 +113,7 @@ export default function Settings() {
                     Edit Profile
                 </div>
                 <div>
-                    <div className="px-6 py-1 bg-gradient-to-r from-green to-darkerGreen text-white rounded-xl cursor-pointer active:opacity-50">
+                    <div onClick={handleUpdateProfile} className="px-6 py-1 bg-gradient-to-r from-green to-darkerGreen text-white rounded-xl cursor-pointer active:opacity-50">
                         Save
                     </div>
                 </div>
@@ -74,36 +125,39 @@ export default function Settings() {
                             Admin Name
                         </div>
                         <input
-                            className="cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md  bg-inputBg"
+                            className="w-[100%] outline-none text-sm md:text-lg rounded-md  bg-inputBg"
                             onChange={(e) => setAdminName(e.target.value)}
                             type="text"
+                            value={adminName}
                         />
                     </div>
                     <div className="w-[95%] md:w-[45%] bg-inputBg rounded-xl mt-2 p-2">
                         <div className="text-sm md:text-base text-textColor">Email</div>
                         <input
-                            className="cursor-pointer bg-inputBg w-[100%] outline-none text-sm md:text-lg rounded-md"
+                            className="bg-inputBg w-[100%] outline-none text-sm md:text-lg rounded-md"
                             type="text"
                             onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            disabled
                         />
                     </div>
                 </div>
                 <div className="flex flex-col items-center md:flex-row md:gap-4 sm:justify-center md:mb-4">
-                    <div className="w-[95%] md:w-[45%] bg-inputBg rounded-xl mt-2 p-2">
+                    {/* <div className="w-[95%] md:w-[45%] bg-inputBg rounded-xl mt-2 p-2">
                         <div className="text-sm md:text-base text-textColor">Contact</div>
                         <PhoneInput
                             defaultCountry="US"
                             value={contact}
                             onChange={setContact}
                         />
-                    </div>
-                    <div className="w-[95%] md:w-[45%] bg-inputBg rounded-xl mt-2 p-2">
+                    </div> */}
+                    {/* <div className="w-[95%] md:w-[45%] bg-inputBg rounded-xl mt-2 p-2">
                         <div className="text-sm md:text-base text-textColor">Location</div>
                         <input
                             className="cursor-pointer w-[100%] bg-inputBg outline-none text-sm md:text-lg rounded-md"
                             type="text"
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="flex justify-between items-center w-[95%] sm:w-[60%] mt-6">
@@ -131,6 +185,7 @@ export default function Settings() {
                                 className="cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md bg-inputBg"
                                 type={showCurrentPassword ? "text" : "password"}
                                 onChange={(e) => setPassword(e.target.value)}
+                                value={password}
                             />
                             <img
                                 className="w-6 absolute top-7 md:top-10 right-4 cursor-pointer"
@@ -146,6 +201,7 @@ export default function Settings() {
                                 className="cursor-pointer w-[100%] outline-none text-sm md:text-lg rounded-md bg-inputBg"
                                 type={showNewPassword ? "text" : "password"}
                                 onChange={(e) => setNewPassword(e.target.value)}
+                                value={newPassword}
                             />
                             <img
                                 className="w-6 absolute top-7 md:top-10 right-4 cursor-pointer"
@@ -161,6 +217,7 @@ export default function Settings() {
                                 className="cursor-pointer w-[100%] outline-none text-sm md:text-lg bg-inputBg"
                                 type={showConfirmPassword ? "text" : "password"}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
+                                value={confirmPassword}
                             />
                             <img
                                 className="w-6 absolute top-7 md:top-10 right-4 cursor-pointer"
