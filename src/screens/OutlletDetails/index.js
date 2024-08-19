@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CoffeeCarousel from '../../Component/Slider';
+import moment from 'moment';
 
 export default function OutletDetails() {
     const scrollRef = useRef(null);
@@ -19,7 +20,7 @@ export default function OutletDetails() {
     const [isEventModalOpen, setIsEventModalOpen] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(null);
     const [currentIndexTwo, setCurrentIndexTwo] = useState(null);
-    const [orderStatus, setOrderStatus] = useState("Order Status");
+    const [orderStatus, setOrderStatus] = useState("All");
     const [cafeDetails, setCafeDetails] = useState()
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -73,48 +74,48 @@ export default function OutletDetails() {
         setCurrentIndexTwo(null);
     };
 
-    const [orders, setOrders] = useState([
-        {
-            customerName: "Justin Lipshutz",
-            customerId: "Dsukjik414",
-            paymentMethod: "Cash on Delivery",
-            amount: "2,50",
-            timestamp: "Today 05:00PM",
-            status: "Completed",
-        },
-        {
-            customerName: "Justin Lipshutz",
-            customerId: "Dsukjik414",
-            paymentMethod: "Cash on Delivery",
-            amount: "2,50",
-            timestamp: "Today 05:00PM",
-            status: "Pending",
-        },
-        {
-            customerName: "Justin Lipshutz",
-            customerId: "Dsukjik414",
-            paymentMethod: "Cash on Delivery",
-            amount: "2,50",
-            timestamp: "Today 05:00PM",
-            status: "Completed",
-        },
-        {
-            customerName: "Justin Lipshutz",
-            customerId: "Dsukjik414",
-            paymentMethod: "Cash on Delivery",
-            amount: "2,50",
-            timestamp: "Today 05:00PM",
-            status: "Pending",
-        },
-        {
-            customerName: "Justin Lipshutz",
-            customerId: "Dsukjik414",
-            paymentMethod: "Cash on Delivery",
-            amount: "2,50",
-            timestamp: "Today 05:00PM",
-            status: "Completed",
-        },
-    ])
+    // const [orders, setOrders] = useState([
+    //     {
+    //         customerName: "Justin Lipshutz",
+    //         customerId: "Dsukjik414",
+    //         paymentMethod: "Cash on Delivery",
+    //         amount: "2,50",
+    //         timestamp: "Today 05:00PM",
+    //         status: "Completed",
+    //     },
+    //     {
+    //         customerName: "Justin Lipshutz",
+    //         customerId: "Dsukjik414",
+    //         paymentMethod: "Cash on Delivery",
+    //         amount: "2,50",
+    //         timestamp: "Today 05:00PM",
+    //         status: "Pending",
+    //     },
+    //     {
+    //         customerName: "Justin Lipshutz",
+    //         customerId: "Dsukjik414",
+    //         paymentMethod: "Cash on Delivery",
+    //         amount: "2,50",
+    //         timestamp: "Today 05:00PM",
+    //         status: "Completed",
+    //     },
+    //     {
+    //         customerName: "Justin Lipshutz",
+    //         customerId: "Dsukjik414",
+    //         paymentMethod: "Cash on Delivery",
+    //         amount: "2,50",
+    //         timestamp: "Today 05:00PM",
+    //         status: "Pending",
+    //     },
+    //     {
+    //         customerName: "Justin Lipshutz",
+    //         customerId: "Dsukjik414",
+    //         paymentMethod: "Cash on Delivery",
+    //         amount: "2,50",
+    //         timestamp: "Today 05:00PM",
+    //         status: "Completed",
+    //     },
+    // ])
     const next = () => {
         sliderRef.slickNext();
     };
@@ -169,18 +170,25 @@ export default function OutletDetails() {
         });
     };
 
+    const getShortId = (id) => {
+        if (!id) return '';
+        return id.toString().slice(0, 8);
+    }
 
+    const formatDate = (date) => {
+        return moment(date).format('MMM-DD-YYYY h:mm A');
+    };
 
     return (
         <div className='md:pl-[18%] sm:pl-[19%] pl-[22%] py-6 px-2'>
-            <div className='flex justify-between items-center mb-4 md:6 lg:mb-10'>
+            <div className='flex  items-center mb-4 md:6 lg:mb-10'>
                 <div>
                     <img className='w-6 md:w-8 cursor-pointer active:opacity-50' src={images.backBtn} onClick={() => navigate('/outlets')} />
                 </div>
-                <div className='text-xl md:text-2xl font-semibold'>Deatails</div>
-                <div className=' cursor-pointer active:opacity-50 bg-gradient-to-r from-green to-darkerGreen text-white text-xs sm:text-base px-2 md:px-6 py-2 rounded-md font-medium'>
+                <div className='text-xl md:text-2xl font-semibold mx-auto'>Deatails</div>
+                {/* <div className=' cursor-pointer active:opacity-50 bg-gradient-to-r from-green to-darkerGreen text-white text-xs sm:text-base px-2 md:px-6 py-2 rounded-md font-medium'>
                     Ban Outlet
-                </div>
+                </div> */}
             </div>
             <div className='flex flex-col lg:flex-row gap-2 gap-2 lg:gap-6 mb-4 md:mb-6 lg:mb-10'>
                 <div>
@@ -283,12 +291,14 @@ export default function OutletDetails() {
                 </div>
             </div>
             <div className='flex items-center gap-2 md:gap-4 w-full mt-10 mb-4'>
-                <div className='text-md md:text-2xl font-semibold'>
-                    Havana Cafe Orders
-                </div>
-                <div className='rounded-2xl text-md px-2 md:px-4 py-1 text-white bg-gradient-to-r from-green to-darkerGreen'>
-                    {orders.length} order{orders.length > 1 ? 's' : ''}
-                </div>
+            <div className='flex items-center gap-2 md:gap-4 w-full my-4'>
+                            <div className='text-md md:text-2xl font-semibold'>
+                                {`${cafeDetails?.outletName} Orders`}
+                            </div>
+                            <div className='rounded-2xl text-md px-2 md:px-4 py-1 text-white bg-gradient-to-r from-green to-darkerGreen'>
+                                {`${cafeDetails?.orders?.length} orders`}
+                            </div>
+                        </div>
             </div>
             <div className='hidden lg:block'>
                 <div className='border-2 border-borderColor rounded-xl relative'>
@@ -299,71 +309,96 @@ export default function OutletDetails() {
                         <div className='text-lg text-orderColor flex justify-center'>Amount</div>
                         <div className='text-lg text-orderColor flex justify-center'>Delivery Time</div>
                         <div className='flex items-center justify-center gap-2'>
-                            <div className='text-lg text-orderColor  '>{orderStatus} </div>
-                            <img onClick={() => setDropDown(!dropDown)} className="w-4 transition-transform duration-300"
-                                style={{ transform: dropDown ? 'rotate(180deg)' : 'rotate(0deg)' }} src={images.downArrow} />
-                        </div>
-                        {dropDown && (
-                            <div className='border-2 border-borderColor rounded-xl absolute right-16 top-10  px-6 py-2  bg-white z-10'>
-                                <div className='flex justify-center items-center gap-2 my-2'>
-                                    <div onClick={() => { setOrderStatus("All"); setDropDown() }} className='text-lg'>All</div>
-                                </div>
-                                <div className='border border-borderColor'></div>
-                                <div className='flex justify-center items-center gap-2 my-2'>
-                                    <div onClick={() => { setOrderStatus("Pending"); setDropDown() }} className='text-lg'>Pending</div>
-                                </div>
-                                <div className='border border-borderColor'></div>
-                                <div className='flex justify-center items-center gap-2 my-2'>
-                                    <div onClick={() => { setOrderStatus("Completed"); setDropDown() }} className='text-lg'>Completed</div>
-                                </div>
-                                <div className='border border-borderColor'></div>
-                                <div className='flex justify-center items-center gap-2 my-2'>
-                                    <div onClick={() => { setOrderStatus("Cancelled"); setDropDown() }} className='text-lg'>Cancelled</div>
-                                </div>
-                            </div>
-                        )}
+                                            <div className='text-lg text-orderColor cursor-pointer' onClick={() => setDropDown(!dropDown)}>{orderStatus === "All" ? "Order Status" : orderStatus} </div>
+                                            <img className="w-4 transition-transform duration-300"
+                                                style={{ transform: dropDown ? 'rotate(180deg)' : 'rotate(0deg)' }} src={images.downArrow} />
+                                        </div>
+                                        {dropDown && (
+                                            <div className='border-2 border-borderColor rounded-xl absolute right-16 top-10 py-0  bg-white z-10'>
+                                                <div onClick={() => { setOrderStatus("All"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>All</div>
+                                                </div>
+                                                <div className='border border-borderColor'></div>
+                                                <div onClick={() => { setOrderStatus("Pending"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>Pending</div>
+                                                </div>
+                                                <div className='border border-borderColor'></div>
+                                                <div onClick={() => { setOrderStatus("Completed"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>Completed</div>
+                                                </div>
+                                                <div className='border border-borderColor'></div>
+                                                <div onClick={() => { setOrderStatus("Cancelled"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>Cancelled</div>
+                                                </div>
+                                                <div className='border border-borderColor'></div>
+                                                <div onClick={() => { setOrderStatus("Ready"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>Ready</div>
+                                                </div>
+                                                <div className='border border-borderColor'></div>
+                                                <div onClick={() => { setOrderStatus("Picked"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>Picked</div>
+                                                </div>
+                                                <div className='border border-borderColor'></div>
+                                                <div onClick={() => { setOrderStatus("Preparing"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                                    <div className='text-lg'>Preparing</div>
+                                                </div>
+                                            </div>
+                                        )}
                     </div>
                     <div className='border border-borderColor my-2 mx-6'></div>
-                    <div>
-                        {orders.map((order, index) => (
-                            <div key={index} className='grid grid-cols-6 my-4 mr-4'>
-                                <div className='flex items-center justify-center gap-2'>
-                                    <div className='text-lg text-orderColor'>{index + 1}</div>
-                                    <div className='text-lg font-semibold'>{order.customerName}</div>
-                                </div>
-                                <div className='text-lg text-orderColor flex justify-center'>{order.customerId}</div>
-                                <div className='text-lg text-orderColor flex justify-center'>{order.paymentMethod}</div>
-                                <div className='text-lg text-orderColor flex justify-center'>{order.amount}</div>
-                                <div className='text-lg text-orderColor flex justify-center'>{order.timestamp}</div>
-                                <div className='flex justify-center'>
-                                    <div className={`flex items-center justify-center rounded-md text-lg 
-                                        ${order.status === 'Completed' ? 'bg-lightGreen bg-opacity-10 text-lightGreen px-2' : 'bg-[#FFE6B6] bg-opacity-40 text-[#E5B300] px-5 '}`}>
-                                        {order.status === 'pending' ? 'Completed' : order.status}
+                    <div className=' h-[40vh] overflow-scroll'>
+                                        {cafeDetails?.orders
+                                        .filter(item => orderStatus === "All" || item.status === orderStatus)
+                                            .map((order, index) => (
+                                                <div key={index} className='grid grid-cols-6 my-4 mr-4'>
+                                                    <div className='flex items-center justify-center gap-2'>
+                                                        <div className='text-lg text-orderColor'>{index + 1}</div>
+                                                        <div className='text-lg font-semibold'>{order?.customerData?.userName}</div>
+                                                    </div>
+                                                    <div className='text-lg text-orderColor flex justify-center'>{getShortId(order?._id)}</div>
+                                                    <div className='text-lg text-orderColor flex justify-center'>{order?.paymentMethod}</div>
+                                                    <div className='text-lg text-orderColor flex justify-center'>{`$ ${order?.totalAmount}`}</div>
+                                                    <div className='text-lg text-orderColor flex justify-center'>{formatDate(order?.createdAt)}</div>
+                                                    <div className='flex justify-center items-center'>
+                                                        <div
+                                                            className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-md bg-pendingBG text-lightGreen px-5 py-1" :
+                                                                order?.status === "Ready" ? "flex items-center justify-center rounded-md text-md bg-readyBG text-readyText px-5 py-1" :
+                                                                    order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-md bg-cancelBG text-cancleText px-5 py-1" :
+                                                                        order?.status === "Picked" ? "flex items-center justify-center rounded-md text-md bg-pickedBG text-pickedText px-5 py-1" :
+                                                                            order?.status === "Completed" ? "flex items-center justify-center rounded-md text-md bg-colpletedBG text-completedText px-5 py-1" :
+                                                                                order?.status === "Preparing" && "flex items-center justify-center rounded-md text-md bg-preparingBG text-preparingText px-5 py-1"
+                                                            }
+                                                        >{order?.status}</div>
+                                                    </div>
+                                                </div>
+                                            ))}
                                     </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
                 </div>
 
             </div>
             <div className='lg:hidden'>
                 <div className="border border-borderColor rounded-lg p-4 shadow-sm">
-                    {orders.map((order, index) => (
+                    {cafeDetails?.orders?.map((order, index) => (
                         <div key={index} className="border-t border-borderColor">
                             <div className='flex gap-2 my-2'>
                                 <div className='mt-0.5 sm:text-base md:text-lg text-orderColor'>{index + 1}</div>
                                 <div className=' w-full flex flex-col gap-1'>
                                     <div className='flex justify-between'>
-                                        <div className='text-lg sm:text-xl md:text-2xl font-semibold'>{order.customerName}</div>
-                                        <div className='text-lg sm:text-xl md:text-2xl font-semibold'>${order.amount}</div>
+                                        <div className='text-lg sm:text-xl md:text-2xl font-semibold'>{order?.customerData?.userName}</div>
+                                        <div className='text-lg sm:text-xl md:text-2xl font-semibold'>{`$ ${order?.totalAmount}`}</div>
                                     </div>
-                                    <div className='flex justify-between items-center'>
-                                        <div className='text-xs sm:text-base md:text-lg text-orderColor'>{order.timestamp} - {order.paymentMethod}</div>
-                                        <div className={`flex items-center rounded-md text-sm sm:text-base md:text-lg ${order.status === 'Completed' ? 'px-2 py-1 bg-lightGreen bg-opacity-10 text-lightGreen' : 'px-5 py-1 bg-[#FFE6B6] bg-opacity-30 text-[#E5B300]'}`}>
-                                            {order.status === 'pending' ? 'Completed' : order.status}
+                                                                            <div className='flex justify-between items-center'>
+                                            <div className='text-xs sm:text-base md:text-lg text-orderColor'>{formatDate(order?.createdAt)} - {order.paymentMethod}</div>
+                                            <div
+                                                            className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-sm bg-pendingBG text-lightGreen px-2 py-1" :
+                                                                order?.status === "Ready" ? "flex items-center justify-center rounded-md text-sm bg-readyBG text-readyText px-2 py-1" :
+                                                                    order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-sm bg-cancelBG text-cancleText px-2 py-1" :
+                                                                        order?.status === "Picked" ? "flex items-center justify-center rounded-md text-sm bg-pickedBG text-pickedText px-2 py-1" :
+                                                                            order?.status === "Completed" ? "flex items-center justify-center rounded-md text-sm bg-colpletedBG text-completedText px-2 py-1" :
+                                                                                order?.status === "Preparing" && "flex items-center justify-center rounded-md text-sm bg-preparingBG text-preparingText px-2 py-1"
+                                                            }
+                                                        >{order?.status}</div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

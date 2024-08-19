@@ -203,7 +203,7 @@ export default function Outlets() {
                     </div>
                     <div className='flex justify-between relative mb-2'>
                         <div className='text-xl sm:2xl md:text-3xl font-semibold'>Outlets</div>
-                        <div className='flex items-center gap-2' onClick={() => setDropDown(!dropDown)}>
+                        {/* <div className='flex items-center gap-2' onClick={() => setDropDown(!dropDown)}>
                             <img className='w-4 sm:w-6 md:w-8' src={images.filterIcon} />
                             <div className='text-xl sm:2xl md:text-3xl font-semibold'>Filter</div>
                         </div>
@@ -224,7 +224,7 @@ export default function Outlets() {
                                     <div className='text-lg'>Banned</div>
                                 </div>
                             </div>
-                        )}
+                        )} */}
                     </div>
                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
                         {outlet?.length > 0 && currentProducts?.map((item, index) => (
