@@ -31,6 +31,7 @@ export default function Login() {
             const response = await Signin(body)
             if (response?.success) {
                 setLaoder(false)
+                console.log(response?.adminData);
                 dispatch(setAdminData(response?.adminData))
                 dispatch(setAuthToken(response?.token))
             } else {

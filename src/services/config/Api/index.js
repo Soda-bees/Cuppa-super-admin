@@ -1,6 +1,8 @@
 import axios from "axios"
 
-export const baseURL = "http://192.168.100.112:8080/"
+// export const baseURL = "http://192.168.100.112:8080/"
+export const baseURL = "https://cuppa-backend-9a54793717b3.herokuapp.com/"
+
 
 export const Signin = async (body) => {
     try {
