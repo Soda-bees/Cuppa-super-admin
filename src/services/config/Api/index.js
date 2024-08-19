@@ -1,7 +1,7 @@
 import axios from "axios"
 
-// export const baseURL = "http://192.168.100.112:8080/"
-export const baseURL = "https://cuppa-backend-9a54793717b3.herokuapp.com/"
+export const baseURL = "http://192.168.100.112:8080/"
+// export const baseURL = "https://cuppa-backend-9a54793717b3.herokuapp.com/"
 
 
 export const Signin = async (body) => {
@@ -30,12 +30,12 @@ export const UpdatePassword = async (token, body) => {
     try {
         const headers = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}` 
+            "Authorization": `Bearer ${token}`
         };
         const response = await axios.post(`${baseURL}superAdmin/updatePassword`, body, { headers });
         return response?.data;
     } catch (error) {
-        return error; 
+        return error;
     }
 };
 
@@ -43,12 +43,65 @@ export const updateProfile = async (token, body) => {
     try {
         const headers = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}` 
+            "Authorization": `Bearer ${token}`
         };
         const response = await axios.post(`${baseURL}superAdmin/updateAdminDetails`, body, { headers });
         return response?.data;
     } catch (error) {
-        return error; 
+        return error;
     }
 };
+
+export const uploadRewardImage = async (formData, token) => {
+    try {
+
+        const headers = {
+            'Content-Type': 'multipart/form-data',
+            "Authorization": `Bearer ${token}`
+        }
+        const { data } = await axios.post(`${baseURL}user/uploadProfile`, formData, { headers })
+        return data
+    } catch (error) {
+        return error
+    }
+}
+
+export const addReward = async (token, body) => {
+    try {
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        };
+        const response = await axios.post(`${baseURL}superAdmin/createSuperAdminReward`, body, { headers })
+        return response?.data
+    } catch (error) {
+        return error
+    }
+}
+
+export const handleDeleteReward = async (rewardId, token) => {
+    try {
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        };
+        const response = await axios.post(`${baseURL}superAdmin/deleteSuperAdminReward`, { rewardId }, { headers })
+        return response?.data
+    } catch (error) {
+        return error
+    }
+}
+
+export const updateReward = async (token, body) => {
+    try {
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        };
+        const response = await axios.post(`${baseURL}superAdmin/updateSuperAdminReward`, body, { headers })
+        return response?.data
+    } catch (error) {
+        return error
+    }
+}
 

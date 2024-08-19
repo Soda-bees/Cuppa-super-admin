@@ -74,48 +74,6 @@ export default function OutletDetails() {
         setCurrentIndexTwo(null);
     };
 
-    // const [orders, setOrders] = useState([
-    //     {
-    //         customerName: "Justin Lipshutz",
-    //         customerId: "Dsukjik414",
-    //         paymentMethod: "Cash on Delivery",
-    //         amount: "2,50",
-    //         timestamp: "Today 05:00PM",
-    //         status: "Completed",
-    //     },
-    //     {
-    //         customerName: "Justin Lipshutz",
-    //         customerId: "Dsukjik414",
-    //         paymentMethod: "Cash on Delivery",
-    //         amount: "2,50",
-    //         timestamp: "Today 05:00PM",
-    //         status: "Pending",
-    //     },
-    //     {
-    //         customerName: "Justin Lipshutz",
-    //         customerId: "Dsukjik414",
-    //         paymentMethod: "Cash on Delivery",
-    //         amount: "2,50",
-    //         timestamp: "Today 05:00PM",
-    //         status: "Completed",
-    //     },
-    //     {
-    //         customerName: "Justin Lipshutz",
-    //         customerId: "Dsukjik414",
-    //         paymentMethod: "Cash on Delivery",
-    //         amount: "2,50",
-    //         timestamp: "Today 05:00PM",
-    //         status: "Pending",
-    //     },
-    //     {
-    //         customerName: "Justin Lipshutz",
-    //         customerId: "Dsukjik414",
-    //         paymentMethod: "Cash on Delivery",
-    //         amount: "2,50",
-    //         timestamp: "Today 05:00PM",
-    //         status: "Completed",
-    //     },
-    // ])
     const next = () => {
         sliderRef.slickNext();
     };
@@ -157,14 +115,14 @@ export default function OutletDetails() {
     };
 
     const eventScrollLeft = () => {
-        scrollRef.current.scrollBy({
+        eventScrollRef.current.scrollBy({
             left: -300, // Adjust scroll amount
             behavior: 'smooth',
         });
     };
 
     const eventScrollRight = () => {
-        scrollRef.current.scrollBy({
+        eventScrollRef.current.scrollBy({
             left: 300, // Adjust scroll amount
             behavior: 'smooth',
         });
@@ -185,7 +143,7 @@ export default function OutletDetails() {
                 <div>
                     <img className='w-6 md:w-8 cursor-pointer active:opacity-50' src={images.backBtn} onClick={() => navigate('/outlets')} />
                 </div>
-                <div className='text-xl md:text-2xl font-semibold mx-auto'>Deatails</div>
+                <div className='text-xl md:text-2xl font-semibold mx-auto'>{`${cafeDetails?.outletName} Details`}</div>
                 {/* <div className=' cursor-pointer active:opacity-50 bg-gradient-to-r from-green to-darkerGreen text-white text-xs sm:text-base px-2 md:px-6 py-2 rounded-md font-medium'>
                     Ban Outlet
                 </div> */}
@@ -253,7 +211,7 @@ export default function OutletDetails() {
                         </div>
                     ))}
                 </div>
-            </div> 
+            </div>
             <div className='flex justify-between items-center mb-4 mt-4  '>
                 <div className='text-xl md:text-2xl font-semibold'>Events</div>
                 <div className='flex items-center gap-4 mr-4'>
@@ -264,12 +222,12 @@ export default function OutletDetails() {
             <div className='mt-4'>
                 <div className="relative">
                     <div
-                        ref={scrollRef}
+                        ref={eventScrollRef}
                         className=" flex overflow-x-auto space-x-4 scrollbar-hide"
                     >
                         {cafeDetails?.events?.map((item, index) => (
                             <div className='flex' key={index}>
-                                <div className=' flex justify-start gap-2 w-full w-[330px]'>
+                                <div className=' flex justify-start gap-2 w-full w-[335px]'>
                                     <img className='h-28 rounded-xl' src={item?.coverPhoto} />
                                     <div className=' '>
                                         <div className='mb-6'>
@@ -291,14 +249,14 @@ export default function OutletDetails() {
                 </div>
             </div>
             <div className='flex items-center gap-2 md:gap-4 w-full mt-10 mb-4'>
-            <div className='flex items-center gap-2 md:gap-4 w-full my-4'>
-                            <div className='text-md md:text-2xl font-semibold'>
-                                {`${cafeDetails?.outletName} Orders`}
-                            </div>
-                            <div className='rounded-2xl text-md px-2 md:px-4 py-1 text-white bg-gradient-to-r from-green to-darkerGreen'>
-                                {`${cafeDetails?.orders?.length} orders`}
-                            </div>
-                        </div>
+                <div className='flex items-center gap-2 md:gap-4 w-full my-4'>
+                    <div className='text-md md:text-2xl font-semibold'>
+                        {`${cafeDetails?.outletName} Orders`}
+                    </div>
+                    <div className='rounded-2xl text-md px-2 md:px-4 py-1 text-white bg-gradient-to-r from-green to-darkerGreen'>
+                        {`${cafeDetails?.orders?.length} orders`}
+                    </div>
+                </div>
             </div>
             <div className='hidden lg:block'>
                 <div className='border-2 border-borderColor rounded-xl relative'>
@@ -309,70 +267,70 @@ export default function OutletDetails() {
                         <div className='text-lg text-orderColor flex justify-center'>Amount</div>
                         <div className='text-lg text-orderColor flex justify-center'>Delivery Time</div>
                         <div className='flex items-center justify-center gap-2'>
-                                            <div className='text-lg text-orderColor cursor-pointer' onClick={() => setDropDown(!dropDown)}>{orderStatus === "All" ? "Order Status" : orderStatus} </div>
-                                            <img className="w-4 transition-transform duration-300"
-                                                style={{ transform: dropDown ? 'rotate(180deg)' : 'rotate(0deg)' }} src={images.downArrow} />
-                                        </div>
-                                        {dropDown && (
-                                            <div className='border-2 border-borderColor rounded-xl absolute right-16 top-10 py-0  bg-white z-10'>
-                                                <div onClick={() => { setOrderStatus("All"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
-                                                    <div className='text-lg'>All</div>
-                                                </div>
-                                                <div className='border border-borderColor'></div>
-                                                <div onClick={() => { setOrderStatus("Pending"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
-                                                    <div className='text-lg'>Pending</div>
-                                                </div>
-                                                <div className='border border-borderColor'></div>
-                                                <div onClick={() => { setOrderStatus("Completed"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
-                                                    <div className='text-lg'>Completed</div>
-                                                </div>
-                                                <div className='border border-borderColor'></div>
-                                                <div onClick={() => { setOrderStatus("Cancelled"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
-                                                    <div className='text-lg'>Cancelled</div>
-                                                </div>
-                                                <div className='border border-borderColor'></div>
-                                                <div onClick={() => { setOrderStatus("Ready"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
-                                                    <div className='text-lg'>Ready</div>
-                                                </div>
-                                                <div className='border border-borderColor'></div>
-                                                <div onClick={() => { setOrderStatus("Picked"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
-                                                    <div className='text-lg'>Picked</div>
-                                                </div>
-                                                <div className='border border-borderColor'></div>
-                                                <div onClick={() => { setOrderStatus("Preparing"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
-                                                    <div className='text-lg'>Preparing</div>
-                                                </div>
-                                            </div>
-                                        )}
+                            <div className='text-lg text-orderColor cursor-pointer' onClick={() => setDropDown(!dropDown)}>{orderStatus === "All" ? "Order Status" : orderStatus} </div>
+                            <img className="w-4 transition-transform duration-300"
+                                style={{ transform: dropDown ? 'rotate(180deg)' : 'rotate(0deg)' }} src={images.downArrow} />
+                        </div>
+                        {dropDown && (
+                            <div className='border-2 border-borderColor rounded-xl absolute right-16 top-10 py-0  bg-white z-10'>
+                                <div onClick={() => { setOrderStatus("All"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                    <div className='text-lg'>All</div>
+                                </div>
+                                <div className='border border-borderColor'></div>
+                                <div onClick={() => { setOrderStatus("Pending"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                    <div className='text-lg'>Pending</div>
+                                </div>
+                                <div className='border border-borderColor'></div>
+                                <div onClick={() => { setOrderStatus("Completed"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                    <div className='text-lg'>Completed</div>
+                                </div>
+                                <div className='border border-borderColor'></div>
+                                <div onClick={() => { setOrderStatus("Cancelled"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                    <div className='text-lg'>Cancelled</div>
+                                </div>
+                                <div className='border border-borderColor'></div>
+                                <div onClick={() => { setOrderStatus("Ready"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                    <div className='text-lg'>Ready</div>
+                                </div>
+                                <div className='border border-borderColor'></div>
+                                <div onClick={() => { setOrderStatus("Picked"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                    <div className='text-lg'>Picked</div>
+                                </div>
+                                <div className='border border-borderColor'></div>
+                                <div onClick={() => { setOrderStatus("Preparing"); setDropDown() }} className='flex justify-center items-center gap-2 px-8 py-1 cursor-pointer hover:bg-bgSettings'>
+                                    <div className='text-lg'>Preparing</div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className='border border-borderColor my-2 mx-6'></div>
                     <div className=' h-[40vh] overflow-scroll'>
-                                        {cafeDetails?.orders
-                                        .filter(item => orderStatus === "All" || item.status === orderStatus)
-                                            .map((order, index) => (
-                                                <div key={index} className='grid grid-cols-6 my-4 mr-4'>
-                                                    <div className='flex items-center justify-center gap-2'>
-                                                        <div className='text-lg text-orderColor'>{index + 1}</div>
-                                                        <div className='text-lg font-semibold'>{order?.customerData?.userName}</div>
-                                                    </div>
-                                                    <div className='text-lg text-orderColor flex justify-center'>{getShortId(order?._id)}</div>
-                                                    <div className='text-lg text-orderColor flex justify-center'>{order?.paymentMethod}</div>
-                                                    <div className='text-lg text-orderColor flex justify-center'>{`$ ${order?.totalAmount}`}</div>
-                                                    <div className='text-lg text-orderColor flex justify-center'>{formatDate(order?.createdAt)}</div>
-                                                    <div className='flex justify-center items-center'>
-                                                        <div
-                                                            className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-md bg-pendingBG text-lightGreen px-5 py-1" :
-                                                                order?.status === "Ready" ? "flex items-center justify-center rounded-md text-md bg-readyBG text-readyText px-5 py-1" :
-                                                                    order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-md bg-cancelBG text-cancleText px-5 py-1" :
-                                                                        order?.status === "Picked" ? "flex items-center justify-center rounded-md text-md bg-pickedBG text-pickedText px-5 py-1" :
-                                                                            order?.status === "Completed" ? "flex items-center justify-center rounded-md text-md bg-colpletedBG text-completedText px-5 py-1" :
-                                                                                order?.status === "Preparing" && "flex items-center justify-center rounded-md text-md bg-preparingBG text-preparingText px-5 py-1"
-                                                            }
-                                                        >{order?.status}</div>
-                                                    </div>
-                                                </div>
-                                            ))}
+                        {cafeDetails?.orders
+                            .filter(item => orderStatus === "All" || item.status === orderStatus)
+                            .map((order, index) => (
+                                <div key={index} className='grid grid-cols-6 my-4 mr-4'>
+                                    <div className='flex items-center justify-center gap-2'>
+                                        <div className='text-lg text-orderColor'>{index + 1}</div>
+                                        <div className='text-lg font-semibold'>{order?.customerData?.userName}</div>
                                     </div>
+                                    <div className='text-lg text-orderColor flex justify-center'>{getShortId(order?._id)}</div>
+                                    <div className='text-lg text-orderColor flex justify-center'>{order?.paymentMethod}</div>
+                                    <div className='text-lg text-orderColor flex justify-center'>{`$ ${order?.totalAmount}`}</div>
+                                    <div className='text-lg text-orderColor flex justify-center'>{formatDate(order?.createdAt)}</div>
+                                    <div className='flex justify-center items-center'>
+                                        <div
+                                            className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-md bg-pendingBG text-lightGreen px-5 py-1" :
+                                                order?.status === "Ready" ? "flex items-center justify-center rounded-md text-md bg-readyBG text-readyText px-5 py-1" :
+                                                    order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-md bg-cancelBG text-cancleText px-5 py-1" :
+                                                        order?.status === "Picked" ? "flex items-center justify-center rounded-md text-md bg-pickedBG text-pickedText px-5 py-1" :
+                                                            order?.status === "Completed" ? "flex items-center justify-center rounded-md text-md bg-colpletedBG text-completedText px-5 py-1" :
+                                                                order?.status === "Preparing" && "flex items-center justify-center rounded-md text-md bg-preparingBG text-preparingText px-5 py-1"
+                                            }
+                                        >{order?.status}</div>
+                                    </div>
+                                </div>
+                            ))}
+                    </div>
                 </div>
 
             </div>
@@ -387,18 +345,18 @@ export default function OutletDetails() {
                                         <div className='text-lg sm:text-xl md:text-2xl font-semibold'>{order?.customerData?.userName}</div>
                                         <div className='text-lg sm:text-xl md:text-2xl font-semibold'>{`$ ${order?.totalAmount}`}</div>
                                     </div>
-                                                                            <div className='flex justify-between items-center'>
-                                            <div className='text-xs sm:text-base md:text-lg text-orderColor'>{formatDate(order?.createdAt)} - {order.paymentMethod}</div>
-                                            <div
-                                                            className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-sm bg-pendingBG text-lightGreen px-2 py-1" :
-                                                                order?.status === "Ready" ? "flex items-center justify-center rounded-md text-sm bg-readyBG text-readyText px-2 py-1" :
-                                                                    order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-sm bg-cancelBG text-cancleText px-2 py-1" :
-                                                                        order?.status === "Picked" ? "flex items-center justify-center rounded-md text-sm bg-pickedBG text-pickedText px-2 py-1" :
-                                                                            order?.status === "Completed" ? "flex items-center justify-center rounded-md text-sm bg-colpletedBG text-completedText px-2 py-1" :
-                                                                                order?.status === "Preparing" && "flex items-center justify-center rounded-md text-sm bg-preparingBG text-preparingText px-2 py-1"
-                                                            }
-                                                        >{order?.status}</div>
-                                        </div>
+                                    <div className='flex justify-between items-center'>
+                                        <div className='text-xs sm:text-base md:text-lg text-orderColor'>{formatDate(order?.createdAt)} - {order.paymentMethod}</div>
+                                        <div
+                                            className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-sm bg-pendingBG text-lightGreen px-2 py-1" :
+                                                order?.status === "Ready" ? "flex items-center justify-center rounded-md text-sm bg-readyBG text-readyText px-2 py-1" :
+                                                    order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-sm bg-cancelBG text-cancleText px-2 py-1" :
+                                                        order?.status === "Picked" ? "flex items-center justify-center rounded-md text-sm bg-pickedBG text-pickedText px-2 py-1" :
+                                                            order?.status === "Completed" ? "flex items-center justify-center rounded-md text-sm bg-colpletedBG text-completedText px-2 py-1" :
+                                                                order?.status === "Preparing" && "flex items-center justify-center rounded-md text-sm bg-preparingBG text-preparingText px-2 py-1"
+                                            }
+                                        >{order?.status}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -477,7 +435,7 @@ export default function OutletDetails() {
                                     </div>
                                     <div className='flex items-center gap-1 md:gap-2 text-xs sm:text-base lg:text-lg font-medium'>
                                         <img className='w-4 md:w-6' src={images.clockIcon} />
-                                       {currentIndexTwo?.timing}
+                                        {currentIndexTwo?.timing}
                                     </div>
                                 </div>
                             </div>

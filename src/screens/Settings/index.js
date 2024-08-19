@@ -18,7 +18,7 @@ export default function Settings() {
     const { setIsLoading } = useContext(ModalContext);
 
     const adminData = useSelector(selectAdminData)
-    const authToken = useSelector(selectAuthToken)
+    const authToken = useSelector(selectAuthToken)    
 
     const [adminName, setAdminName] = useState("")
     const [email, setEmail] = useState("")
@@ -37,6 +37,8 @@ export default function Settings() {
         if (adminData) {
             setAdminName(adminData?.name)
             setEmail(adminData?.email)
+            console.log(adminData?.name);
+            
         }
     }, [])
 

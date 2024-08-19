@@ -4,14 +4,24 @@ import storage from "redux-persist/lib/storage";
 import authTokenReducer from "./authTokenSlice";
 import adminDataReducers from "./adminDataSlice";
 
-const persistConfig = {
-  key: "root",
+// const persistConfig = {
+//   key: "root",
+//   storage,
+// };
+
+const authTokenPersistConfig = {
+  key: "authToken",
+  storage,
+};
+
+const adminDataPersistConfig = {
+  key: "adminData",
   storage,
 };
 
 const rootReducer = combineReducers({
-  authToken: persistReducer(persistConfig, authTokenReducer),
-  adminData: persistReducer(persistConfig, adminDataReducers),
+  authToken: persistReducer(authTokenPersistConfig, authTokenReducer),
+  adminData: persistReducer(adminDataPersistConfig, adminDataReducers),
 });
 
 export const store = configureStore({

@@ -63,9 +63,10 @@ import uploadImg from "./uploadImg.png"
 import eyeOpen from "./eyeOpen.png"
 import showPassword from "./showPassword.png"
 import nextArrow from "./nextArrow.png"
-
+import upload from "./upload.png"
 
 const images = {
+   upload,
    eyeOpen,
    logo,
    mobLogo,
