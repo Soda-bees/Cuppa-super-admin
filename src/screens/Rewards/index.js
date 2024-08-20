@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import images from '../../assets'
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewReward, deleteReward, selectAdminData } from '../../store/adminDataSlice';
+import { addNewReward, deleteReward, selectAdminData, updateRewardRedux } from '../../store/adminDataSlice';
 import { handleError } from '../../Component/ShowError';
 import { addReward, handleDeleteReward, updateReward, uploadRewardImage } from '../../services/config/Api';
 import { selectAuthToken } from '../../store/authTokenSlice';
@@ -26,7 +26,7 @@ export default function Rewards() {
     const [RequireBeans, setRequireBeans] = useState("")
     const [selectedReward, setSelectedReward] = useState(null);
     const [isEdit, setIsEdit] = useState(false)
-    const [editId , setEditId] = useState(null)
+    const [editId, setEditId] = useState(null)
 
     useEffect(() => {
         if (isModalOpen) {
@@ -168,7 +168,7 @@ export default function Rewards() {
         setSelectedImage(null)
     }
 
-    const handleUpdateReward = async () => {        
+    const handleUpdateReward = async () => {
         try {
             const body = {
                 rewardId: editId,
@@ -176,11 +176,21 @@ export default function Rewards() {
                 title: rewardName,
                 numberOfBeans: RequireBeans
             }
-            console.log(body);
-            
             const response = await updateReward(authToken, body)
-            console.log("update response ==>", response);
-
+            if (response?.success) {
+                alert("Reward updated successfully")
+                dispatch(updateRewardRedux(response?.updatedSuperAdminReward))
+                setIsEdit(false)
+                setIsLoading(false)
+                setIsModalOpen(false)
+                setEditId(null)
+                setRewardName('')
+                setRequireBeans('')
+                setSelectedImage(null)
+            } else {
+                setIsLoading(false)
+                handleError(response?.message)
+            }
         } catch (error) {
             setIsLoading(false)
             handleError(error?.message)
@@ -254,7 +264,7 @@ export default function Rewards() {
                     {adminData && adminData?.superAdminRewards?.map((reward, index) => (
                         <div key={index} className='bg-white border border-borderColor rounded-xl w-full sm:w-52 p-2 sm:p-4 relative'
                             onClick={() => setDropDownIndex(null)}
-                            >
+                        >
                             <div className='flex justify-end'>
                                 <img className='h-5 sm:h-6 cursor-pointer px-1' src={images.dotIcon} onClick={(e) => {
                                     e.stopPropagation();

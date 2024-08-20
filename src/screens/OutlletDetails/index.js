@@ -227,7 +227,7 @@ export default function OutletDetails() {
                     >
                         {cafeDetails?.events?.map((item, index) => (
                             <div className='flex' key={index}>
-                                <div className=' flex justify-start gap-2 w-full w-[335px]'>
+                                <div className=' flex justify-start gap-2 w-full w-[340px] h-[130px]'>
                                     <img className='h-28 rounded-xl' src={item?.coverPhoto} />
                                     <div className=' '>
                                         <div className='mb-6'>

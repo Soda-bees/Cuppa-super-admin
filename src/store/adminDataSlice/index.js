@@ -26,19 +26,19 @@ export const adminData = createSlice({
       );
     },
     updateRewardRedux: (state, action) => {
-      const { _id, updatedData } = action.payload; // Destructure _id and updated data from the action payload
-    
+      const updatedData = action.payload;
+
       state.adminData.superAdminRewards = state.adminData.superAdminRewards.map(
-        (reward) => 
-          reward._id === _id 
-            ? { ...reward, ...updatedData } // Update the matched reward with the new data
-            : reward // Return other rewards unchanged
+        (reward) =>
+          reward._id === updatedData._id
+            ? { ...reward, ...updatedData }
+            : reward
       );
     },
   },
 });
 
-export const { setAdminData, clearAdminData, addNewReward , deleteReward} = adminData.actions;
+export const { setAdminData, clearAdminData, addNewReward, deleteReward, updateRewardRedux } = adminData.actions;
 
 export const selectAdminData = (state) => state.adminData.adminData;
 
