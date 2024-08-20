@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState , useRef } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import images from '../../assets'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -168,7 +168,7 @@ export default function Dashboard() {
     const formatDate = (date) => {
         return moment(date).format('MMM-DD-YYYY h:mm A');
     };
-   
+
     const scrollLeft = () => {
         scrollRef.current.scrollBy({
             left: -300, // Adjust scroll amount
@@ -188,7 +188,7 @@ export default function Dashboard() {
             <div className='w-[98%]'>
                 <div className='relative'>
                     <img className='absolute left-2 top-4 w-5  cursor-pointer' src={images.searchIcon} />
-                    <input placeholder='Search' className='w-[100%] border-2 border-borderColor rounded-xl cursor-pointer bg-transparent p-2 pl-8 text-xl outline-none'
+                    <input placeholder='Search' value={search} className='w-[100%] border-2 border-borderColor rounded-xl cursor-pointer bg-transparent p-2 pl-8 text-xl outline-none'
                         onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className=' mt-4 sm:mt-6 md:mt-10 mb-4'>
@@ -200,83 +200,88 @@ export default function Dashboard() {
                     <div className='border-2 border-borderColor rounded-xl w-full p-4 sm:p-6 md:p-4 lg:p-2 xl:p-6'>
                         <div className='w-full flex items-center gap-4 lg:gap-2 xl:gap-4 my-1 sm:my-2'>
                             <img className=' w-8 sm:w-10 lg:w-14 xl:w-16' src={images.salesIcon} />
-                            <span className='font-semibold text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl text-darkerBlue'>${sales}</span>
+                            <span className='font-semibold text-xl sm:text-2xl lg:text-1xl 2xl:text-4xl text-darkerBlue'>${sales}</span>
                         </div>
-                        <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>Total Sales</div>
+                        <div className='text-lg font-medium sm:text-xl xl:text-1xl my-1 sm:my-2 text-gray'>Total Sales</div>
                     </div>
                     <div className='border-2 border-borderColor rounded-xl w-full p-4 sm:p-6 md:p-4 lg:p-2 xl:p-6'>
                         <div className='w-full flex items-center gap-4 lg:gap-2 xl:gap-4 my-1 sm:my-2'>
                             <img className=' w-8 sm:w-10 lg:w-14 xl:w-16' src={images.orderIcon} />
-                            <span className='font-semibold text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl  text-darkerBlue'>{orders}</span>
+                            <span className='font-semibold text-xl sm:text-2xl lg:text-1xl 2xl:text-4xl  text-darkerBlue'>{orders}</span>
                         </div>
-                        <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>Total Order</div>
+                        <div className='text-lg font-medium sm:text-xl xl:text-1xl my-1 sm:my-2 text-gray'>Total Order</div>
                     </div>
                     <div className='border-2 border-borderColor rounded-xl w-full p-4 sm:p-6 md:p-4 lg:p-2 xl:p-6'>
                         <div className='w-full flex items-center gap-4 lg:gap-2 xl:gap-4 my-1 sm:my-2'>
                             <img className=' w-8 sm:w-10 lg:w-14 xl:w-16' src={images.newOutletIcon} />
-                            <span className='font-semibold text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl text-darkerBlue'>{outlets}</span>
+                            <span className='font-semibold text-xl sm:text-2xl lg:text-1xl 2xl:text-4xl text-darkerBlue'>{outlets}</span>
                         </div>
-                        <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>Total Outlets</div>
+                        <div className='text-lg font-medium sm:text-xl xl:text-1xl my-1 sm:my-2 text-gray'>Total Outlets</div>
                     </div>
                     <div className='border-2 border-borderColor rounded-xl w-full p-4 sm:p-6 md:p-4 lg:p-2 xl:p-6'>
                         <div className='w-full flex items-center gap-4 lg:gap-2 xl:gap-4 my-1 sm:my-2'>
                             <img className=' w-8 sm:w-10 lg:w-14 xl:w-16' src={images.newOutletIcon} />
-                            <span className='font-semibold text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl text-darkerBlue'>{newOutlets}</span>
+                            <span className='font-semibold text-xl sm:text-2xl lg:text-1xl 2xl:text-4xl text-darkerBlue'>{newOutlets}</span>
                         </div>
-                        <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>New Outlets</div>
+                        <div className='text-lg font-medium sm:text-xl xl:text-1xl my-1 sm:my-2 text-gray'>New Outlets</div>
                         <div className='text-md my-1 sm:my-2 text-lightGray'>In past seven days</div>
                     </div>
                     <div className='border-2 border-borderColor rounded-xl w-full p-4 sm:p-6 md:p-4 lg:p-2 xl:p-6'>
                         <div className='w-full flex items-center gap-4 lg:gap-2 xl:gap-4 my-1 sm:my-2'>
                             <img className='w-8 sm:w-10 lg:w-14 xl:w-16' src={images.newOutletIcon} />
-                            <span className='font-semibold text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl text-darkerBlue'>{oldOutlets}</span>
+                            <span className='font-semibold text-xl sm:text-2xl lg:text-1xl 2xl:text-4xl text-darkerBlue'>{oldOutlets}</span>
                         </div>
-                        <div className='text-lg font-medium sm:text-xl xl:text-2xl my-1 sm:my-2 text-gray'>Active Outlets</div>
+                        <div className='text-lg font-medium sm:text-xl xl:text-1xl my-1 sm:my-2 text-gray'>Active Outlets</div>
                     </div>
                 </div>
                 <div className='flex justify-between items-center mb-4  '>
-                <div className='text-xl md:text-2xl font-semibold'>Outlets</div>
-                <div className='flex items-center gap-4 mr-4'>
-                <img className='w-6 md:w-8 cursor-pointer active:opacity-50' src={images.backBtn} onClick={scrollLeft} />
-                <img className='w-6 md:w-8 cursor-pointer active:opacity-50' src={images.nextArrow} onClick={scrollRight} />
-                 </div>
+                    <div className='text-xl md:text-2xl font-semibold'>Outlets</div>
+                    <div className='flex items-center gap-4 mr-4'>
+                        <img className='w-6 md:w-8 cursor-pointer active:opacity-50' src={images.backBtn} onClick={scrollLeft} />
+                        <img className='w-6 md:w-8 cursor-pointer active:opacity-50' src={images.nextArrow} onClick={scrollRight} />
+                    </div>
                 </div>
 
-<div className="relative">
-      <div
-        ref={scrollRef}
-        className="flex overflow-x-auto space-x-4 scrollbar-hide p-4"
-      >
-        {cafes.map((item, index) => (
-          <div
-            key={index}
-            className={`cursor-pointer border-2 rounded-xl p-4 mb-4 ${selectedCafe?._id === item?._id ? 'border-darkerGreen' : 'border-borderColor'} flex-shrink-0`}
-            onClick={() => handleClick(item)}
-            style={{ minWidth: '250px', maxWidth: '350px' }}
-          >
-            <div className='relative'>
-              <img
-                className='rounded-xl w-full min-h-[240px] max-h-[300px] object-cover'
-                src={item?.outletCover}
-                alt={item?.outletName}
-              />
-              <div className='flex justify-center items-center gap-1 bg-white rounded-xl absolute left-2 bottom-2 px-2 backdrop-blur-xl bg-white/30'>
-                <img className='w-3 md:w-4' src={images.starIcon} alt='Star Icon' />
-                <span className='text-xs sm:text-sm md:text-lg font-semibold text-white'>{handleRating(item)}</span>
-              </div>
-            </div>
-            <div className='flex justify-between items-center mt-2'>
-              <div className='text-md sm:text-lg md:text-xl font-semibold'>{item?.outletName}</div>
-              <div className='text-md sm:text-lg md:text-xl'>{handleStatus(item?.openHours)}</div>
-            </div>
-            <div className='flex items-center gap-2'>
-              <img className='h-4 sm:h-5 md:h-6' src={images.locationIcon} alt='Location Icon' />
-              <span className='text-sm sm:text-md md:text-lg text-textColor'>{item.location}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+                <div className="relative">
+                    <div
+                        ref={scrollRef}
+                        className="flex overflow-x-auto space-x-4 scrollbar-hide p-4"
+                    >
+                        {cafes
+                            ?.filter((item) => {
+                                if (!search) return true;
+                                return item?.outletName?.toLowerCase()?.includes(search?.toLowerCase()) || item?.location?.toLowerCase()?.includes(search?.toLowerCase())
+                            })
+                            ?.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className={`cursor-pointer border-2 rounded-xl p-4 mb-4 ${selectedCafe?._id === item?._id ? 'border-darkerGreen' : 'border-borderColor'} flex-shrink-0`}
+                                    onClick={() => handleClick(item)}
+                                    style={{ minWidth: '250px', maxWidth: '350px' }}
+                                >
+                                    <div className='relative'>
+                                        <img
+                                            className='rounded-xl w-full min-h-[240px] max-h-[300px] object-cover'
+                                            src={item?.outletCover}
+                                            alt={item?.outletName}
+                                        />
+                                        <div className='flex justify-center items-center gap-1 bg-white rounded-xl absolute left-2 bottom-2 px-2 backdrop-blur-xl bg-white/30'>
+                                            <img className='w-3 md:w-4' src={images.starIcon} alt='Star Icon' />
+                                            <span className='text-xs sm:text-sm md:text-lg font-semibold text-white'>{handleRating(item)}</span>
+                                        </div>
+                                    </div>
+                                    <div className='flex justify-between items-center mt-2'>
+                                        <div className='text-md sm:text-lg md:text-xl font-semibold'>{item?.outletName}</div>
+                                        <div className='text-md sm:text-lg md:text-xl'>{handleStatus(item?.openHours)}</div>
+                                    </div>
+                                    <div className='flex items-center gap-2'>
+                                        <img className='h-4 sm:h-5 md:h-6' src={images.locationIcon} alt='Location Icon' />
+                                        <span className='text-sm sm:text-md md:text-lg text-textColor'>{item.location}</span>
+                                    </div>
+                                </div>
+                            ))}
+                    </div>
+                </div>
                 {
                     selectedCafe &&
                     <div>
@@ -368,7 +373,7 @@ export default function Dashboard() {
                     </div>
                 }
                 <div className='lg:hidden'>
-                     <div className="border border-borderColor rounded-lg p-4 shadow-sm ">
+                    <div className="border border-borderColor rounded-lg p-4 shadow-sm ">
                         {selectedCafe?.orders.map((order, index) => (
                             <div key={index} className="border-t border-borderColor">
                                 <div className='flex gap-2 my-2'>
@@ -381,14 +386,14 @@ export default function Dashboard() {
                                         <div className='flex justify-between items-center'>
                                             <div className='text-xs sm:text-base md:text-lg text-orderColor'>{formatDate(order?.createdAt)} - {order.paymentMethod}</div>
                                             <div
-                                                            className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-sm bg-pendingBG text-lightGreen px-2 py-1" :
-                                                                order?.status === "Ready" ? "flex items-center justify-center rounded-md text-sm bg-readyBG text-readyText px-2 py-1" :
-                                                                    order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-sm bg-cancelBG text-cancleText px-2 py-1" :
-                                                                        order?.status === "Picked" ? "flex items-center justify-center rounded-md text-sm bg-pickedBG text-pickedText px-2 py-1" :
-                                                                            order?.status === "Completed" ? "flex items-center justify-center rounded-md text-sm bg-colpletedBG text-completedText px-2 py-1" :
-                                                                                order?.status === "Preparing" && "flex items-center justify-center rounded-md text-sm bg-preparingBG text-preparingText px-2 py-1"
-                                                            }
-                                                        >{order?.status}</div>
+                                                className={order?.status === "Pending" ? "flex items-center justify-center rounded-md text-sm bg-pendingBG text-lightGreen px-2 py-1" :
+                                                    order?.status === "Ready" ? "flex items-center justify-center rounded-md text-sm bg-readyBG text-readyText px-2 py-1" :
+                                                        order?.status === "Cancelled" ? "flex items-center justify-center rounded-md text-sm bg-cancelBG text-cancleText px-2 py-1" :
+                                                            order?.status === "Picked" ? "flex items-center justify-center rounded-md text-sm bg-pickedBG text-pickedText px-2 py-1" :
+                                                                order?.status === "Completed" ? "flex items-center justify-center rounded-md text-sm bg-colpletedBG text-completedText px-2 py-1" :
+                                                                    order?.status === "Preparing" && "flex items-center justify-center rounded-md text-sm bg-preparingBG text-preparingText px-2 py-1"
+                                                }
+                                            >{order?.status}</div>
                                         </div>
                                     </div>
                                 </div>

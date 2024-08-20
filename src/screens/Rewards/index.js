@@ -202,7 +202,7 @@ export default function Rewards() {
             <div className='w-[98%]'>
                 <div className='relative mb-4 sm:mb-6 md:mb-10'>
                     <img className='absolute left-2 top-3 md:top-4 w-5 cursor-pointer' src={images.searchIcon} />
-                    <input placeholder='search' className='w-[100%] border-2 border-borderColor rounded-xl bg-transparent cursor-pointer p-2 pl-8 text-md md:text-xl outline-none' onChange={(e) => setSearch(e.target.value)} />
+                    <input placeholder='search' value={search} className='w-[100%] border-2 border-borderColor rounded-xl bg-transparent cursor-pointer p-2 pl-8 text-md md:text-xl outline-none' onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className='text-xl sm:text-2xl font-semibold mb-1'>
                     Rewards
@@ -210,95 +210,56 @@ export default function Rewards() {
                 <div className='text-md sm:text-lg text-textColor mb-4 sm:mb-10'>
                     Join our rewards program today and start enjoying the following rewards
                 </div>
-                {/* <div className='text-xl sm:text-2xl font-semibold mb-4'>
-                    Choose Rewards
-                </div> */}
                 <div className='grid grid-cols-2 sm:flex flex-wrap justify-start gap-2 mb-10 sm:mb-20'>
-                    {/* {cards.map((cards, index) => (
-                        <div key={index}
-                            onClick={() => {
-                                setSelectedReward(cards);
-                                setIsModalOpen(true);
-                            }}
-                            className='bg-white border border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40 flex items-center justify-center'>
-                            <img className='w-32 sm:w-28 md:w-32' src={cards.src} alt={`cards ${cards.id}`} />
-                        </div>
-                    ))} */}
-                    {/* <label className='bg-white border-2 border-dashed border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40  
-                    flex flex-col items-center justify-center cursor-pointer'>
-                        {selectedImage ? (
-                            <img src={selectedImage} alt="Uploaded" className='w-32 h-32' />
-                        ) : (
-                            <div className='text-textColor text-base sm:text-xl w-20 text-center'>+ Add Rewards</div>
-                        )}
-                        <input
-                            id="img"
-                            type="file"
-                            accept="image/png, image/jpeg"
-                            onChange={handleImageChange}
-                            className="hidden"
-                        />
-                    </label> */}
                     <div
                         onClick={() => { setIsModalOpen(true) }}
-                        className='bg-white border-2 border-dashed border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40  
-                    flex flex-col items-center justify-center cursor-pointer'>
-                        {/* {selectedImage ? (
-                            <img src={selectedImage} alt="Uploaded" className='w-32 h-32' />
-                        ) : ( */}
+                        className='bg-white border-2 border-dashed border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40 flex flex-col items-center justify-center cursor-pointer'>
                         <div className='text-textColor text-base sm:text-xl w-20 text-center'>+ Add Rewards</div>
-                        {/* )} */}
-                        {/* <input
-                            id="img"
-                            type="file"
-                            accept="image/png, image/jpeg"
-                            onChange={handleImageChange}
-                            className="hidden"
-                        /> */}
                     </div>
                 </div>
                 <div className='text-xl sm:text-2xl font-semibold mb-4'>
                     Active Rewards
                 </div>
                 <div className='grid grid-cols-2 sm:flex flex-wrap justify-start gap-4'>
-                    {adminData && adminData?.superAdminRewards?.map((reward, index) => (
-                        <div key={index} className='bg-white border border-borderColor rounded-xl w-full sm:w-52 p-2 sm:p-4 relative'
-                            onClick={() => setDropDownIndex(null)}
-                        >
-                            <div className='flex justify-end'>
-                                <img className='h-5 sm:h-6 cursor-pointer px-1' src={images.dotIcon} onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleDropDownToggle(reward?._id);
-                                }}
-                                />
-                            </div>
-                            <div className='flex flex-col justify-center items-center'>
-                                <img className='w-32 h-32 sm:w-28 sm:h-28' src={reward.cover} alt={reward.title} />
-                                <div className='text-base sm:text-xl text-textColor text-center'>{reward.title}</div>
-                                <div className='flex gap-1 text-center bg-coffeebeansbg px-2 py-1 rounded-2xl text-textColor bg-opacity-50 font-medium mt-2'>
-                                    <img className='w-4 sm:w-5' src={images.coffeeBeans} alt='Coffee Beans' />
-                                    {reward?.numberOfBeans}
+                    {adminData && adminData?.superAdminRewards
+                        ?.filter((item) => {                            
+                            if (!search) return true;
+                            return item?.title?.toLowerCase()?.includes(search?.toLowerCase()) || item?.numberOfBeans?.toString()?.includes(search?.toLowerCase())
+                        })
+                        ?.map((reward, index) => (
+                            <div key={index} className='bg-white border border-borderColor rounded-xl w-full sm:w-52 p-2 sm:p-4 relative'
+                                onClick={() => setDropDownIndex(null)}
+                            >
+                                <div className='flex justify-end'>
+                                    <img className='h-5 sm:h-6 cursor-pointer px-1' src={images.dotIcon} onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDropDownToggle(reward?._id);
+                                    }}
+                                    />
                                 </div>
-                            </div>
-                            {dropDownIndex === reward?._id && (
-                                <div className='border-2 border-borderColor rounded-md absolute right-1 top-7 sm:right-3 sm:top-11 bg-white'>
-                                    <div className='flex justify-center items-center hover:bg-borderColor p-2' onClick={() => handleEditTrue(reward)}>
-                                        <div className='text-sm cursor-pointer'>
-                                            Edit
+                                <div className='flex flex-col justify-center items-center'>
+                                    <img className='w-32 h-32 sm:w-28 sm:h-28' src={reward.cover} alt={reward.title} />
+                                    <div className='text-base sm:text-xl text-textColor text-center'>{reward.title}</div>
+                                    <div className='flex gap-1 text-center bg-coffeebeansbg px-2 py-1 rounded-2xl text-textColor bg-opacity-50 font-medium mt-2'>
+                                        <img className='w-4 sm:w-5' src={images.coffeeBeans} alt='Coffee Beans' />
+                                        {reward?.numberOfBeans}
+                                    </div>
+                                </div>
+                                {dropDownIndex === reward?._id && (
+                                    <div className='border-2 border-borderColor rounded-md absolute right-1 top-7 sm:right-3 sm:top-11 bg-white'>
+                                        <div className='flex justify-center items-center hover:bg-borderColor p-2' onClick={() => handleEditTrue(reward)}>
+                                            <div className='text-sm cursor-pointer'>
+                                                Edit
+                                            </div>
+                                        </div>
+                                        <div className='border border-borderColor'></div>
+                                        <div className='flex justify-center items-center hover:bg-borderColor p-2' onClick={() => handleDelete(reward?._id)}>
+                                            <div className='text-sm cursor-pointer'>Delete</div>
                                         </div>
                                     </div>
-                                    <div className='border border-borderColor'></div>
-                                    <div className='flex justify-center items-center hover:bg-borderColor p-2' onClick={() => handleDelete(reward?._id)}>
-                                        <div className='text-sm cursor-pointer'>Delete</div>
-                                    </div>
-                                    {/* <div className='border border-borderColor'></div>
-                                    <div className='flex justify-center items-center my-1 '>
-                                        <div className='text-sm cursor-pointer'>Deactivate</div>
-                                    </div> */}
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                                )}
+                            </div>
+                        ))}
                 </div>
             </div>
             <Modal
@@ -306,16 +267,8 @@ export default function Rewards() {
                 className="outline-none h-[100vh] flex items-center justify-center bg-black bg-opacity-10"
             >
                 <div className='bg-white w-[90%] sm:w-[50%] md:w-[40%] lg:w-[30%] xl:w-[20%] rounded-xl p-4'>
-                    {/* {selectedReward && ( */}
                     <>
-
-                        <label className='bg-white border-2 border-dashed mx-auto border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40  
-                    flex flex-col items-center justify-center cursor-pointer'>
-                            {/* {selectedImage ? (
-                                <img src={selectedImage} alt="Uploaded" className='w-32 h-32' />
-                            ) : (
-                                <div className='text-textColor text-base sm:text-xl w-20 text-center'>+ Add Rewards</div>
-                            )} */}
+                        <label className='bg-white border-2 border-dashed mx-auto border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40 flex flex-col items-center justify-center cursor-pointer'>
                             <img className='w-32 sm:w-28 md:w-32' src={
                                 selectedImage ? selectedImage : images.upload
                             }
@@ -328,19 +281,6 @@ export default function Rewards() {
                                 className="hidden"
                             />
                         </label>
-
-                        {/* <div className='flex flex-col items-center gap-2'>
-                            <div
-                                className='bg-white border border-borderColor rounded-xl w-full h-40 sm:w-36 sm:h-36 md:w-40 md:h-40 flex items-center justify-center'>
-                                <img className='w-32 sm:w-28 md:w-32' src={
-                                    selectedImage ? { uri: selectedImage } : images.upload
-                                } 
-                                 />
-                            </div>
-                            <div className='flex gap-2 text-base text-green'>
-                                Change Photo
-                            </div>
-                        </div> */}
                         <div className='mt-4'>
                             <div className='ml-1 mb-1 text-textColor'>Reward Name</div>
                             <input className='w-full border border-borderColor rounded-xl p-2 outline-none font-semibold' type='text' value={rewardName} onChange={(e) => setRewardName(e.target.value)} />
@@ -355,7 +295,6 @@ export default function Rewards() {
                             <div onClick={() => isEdit ? handleUpdateReward() : hanleAddReward()} className='cursor-pointer active:opacity-50 bg-gradient-to-r from-green to-darkerGreen text-white rounded-xl flex justify-center items-center px-6 py-1'>Active</div>
                         </div>
                     </>
-                    {/* )} */}
                 </div>
             </Modal>
         </div>

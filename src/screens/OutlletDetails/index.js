@@ -219,15 +219,18 @@ export default function OutletDetails() {
                     <img className='w-6 md:w-8 active:opacity-50 cursor-pointer' src={images.nextArrow} onClick={eventScrollRight} />
                 </div>
             </div>
+
+
             <div className='mt-4'>
                 <div className="relative">
                     <div
                         ref={eventScrollRef}
                         className=" flex overflow-x-auto space-x-4 scrollbar-hide"
+                        style={{ whiteSpace: "nowrap" }}
                     >
                         {cafeDetails?.events?.map((item, index) => (
-                            <div className='flex' key={index}>
-                                <div className=' flex justify-start gap-2 w-full w-[340px] h-[130px]'>
+                            <div className='flex-shrink-0' style={{ width: "340px" }} key={index}>
+                                <div className=' flex justify-start gap-2 w-full'>
                                     <img className='h-28 rounded-xl' src={item?.coverPhoto} />
                                     <div className=' '>
                                         <div className='mb-6'>
@@ -248,6 +251,8 @@ export default function OutletDetails() {
                     </div>
                 </div>
             </div>
+
+
             <div className='flex items-center gap-2 md:gap-4 w-full mt-10 mb-4'>
                 <div className='flex items-center gap-2 md:gap-4 w-full my-4'>
                     <div className='text-md md:text-2xl font-semibold'>
