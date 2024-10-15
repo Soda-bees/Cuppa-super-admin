@@ -106,10 +106,12 @@ export default function Dashboard() {
             const outletTotal = outlet.orders
                 ? outlet.orders.reduce((sum, order) => sum + parseFloat(order.totalAmount), 0)
                 : 0;
-
+    
             return total + outletTotal;
         }, 0);
-        setSales(totalSales)
+    
+        // Use toFixed(2) to format the total sales to two decimal places
+        setSales(parseFloat(totalSales.toFixed(2)));
     };
 
     const handleRating = cafe => {
