@@ -64,8 +64,10 @@ import eyeOpen from "./eyeOpen.png"
 import showPassword from "./showPassword.png"
 import nextArrow from "./nextArrow.png"
 import upload from "./upload.png"
+import deactivate from "./deactivate.png"
 
 const images = {
+   deactivate,
    upload,
    eyeOpen,
    logo,

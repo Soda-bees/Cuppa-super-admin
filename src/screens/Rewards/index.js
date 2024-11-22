@@ -27,6 +27,7 @@ export default function Rewards() {
     const [selectedReward, setSelectedReward] = useState(null);
     const [isEdit, setIsEdit] = useState(false)
     const [editId, setEditId] = useState(null)
+    const [errMsg, setErrMsg] = useState('')
 
     useEffect(() => {
         if (isModalOpen) {
@@ -35,30 +36,10 @@ export default function Rewards() {
             document.body.style.overflow = "auto";
         }
 
-        // Cleanup on component unmount or if isLoading changes
         return () => {
             document.body.style.overflow = "auto";
         };
     }, [isModalOpen]);
-
-    const [rewards, setRewards] = useState([
-        {
-            image: images.rewardsCoffee,
-            title: 'One Free Coffee',
-            points: 100
-        },
-        {
-            image: images.rewardsBag,
-            title: 'Pack of Cookies',
-            points: 350
-        },
-        {
-            image: images.rewardsCup,
-            title: 'Portal Coffee Mug',
-            points: 600
-        },
-    ]);
-
 
     const [cards, setCards] = useState([
         { id: 1, src: images.rewardsCoffee },
@@ -107,12 +88,16 @@ export default function Rewards() {
         if (!RequireBeans) {
             return handleError("Please add required beans")
         }
+        if (!errMsg) {
+            return handleError("Please add error message")
+        }
         try {
             setIsLoading(true)
             const body = {
                 cover: selectedImage,
                 title: rewardName,
-                numberOfBeans: RequireBeans
+                numberOfBeans: RequireBeans,
+                errMsg
             }
             const response = await addReward(authToken, body)
             if (response?.success) {
@@ -122,6 +107,7 @@ export default function Rewards() {
                 setIsModalOpen(false)
                 setRewardName('')
                 setRequireBeans('')
+                setErrMsg('')
                 setSelectedImage(null)
             } else {
                 setIsLoading(false)
@@ -157,6 +143,7 @@ export default function Rewards() {
         setRewardName(reward?.title)
         setSelectedImage(reward?.cover)
         setRequireBeans(reward?.numberOfBeans)
+        setErrMsg(reward?.errMsg)
         setIsModalOpen(true)
     }
 
@@ -165,6 +152,7 @@ export default function Rewards() {
         setIsModalOpen(false)
         setRewardName('')
         setRequireBeans('')
+        setErrMsg('')
         setSelectedImage(null)
     }
 
@@ -174,7 +162,8 @@ export default function Rewards() {
                 rewardId: editId,
                 cover: selectedImage,
                 title: rewardName,
-                numberOfBeans: RequireBeans
+                numberOfBeans: RequireBeans,
+                errMsg
             }
             const response = await updateReward(authToken, body)
             if (response?.success) {
@@ -186,6 +175,7 @@ export default function Rewards() {
                 setEditId(null)
                 setRewardName('')
                 setRequireBeans('')
+                setErrMsg('')
                 setSelectedImage(null)
             } else {
                 setIsLoading(false)
@@ -222,7 +212,7 @@ export default function Rewards() {
                 </div>
                 <div className='grid grid-cols-2 sm:flex flex-wrap justify-start gap-4'>
                     {adminData && adminData?.superAdminRewards
-                        ?.filter((item) => {                            
+                        ?.filter((item) => {
                             if (!search) return true;
                             return item?.title?.toLowerCase()?.includes(search?.toLowerCase()) || item?.numberOfBeans?.toString()?.includes(search?.toLowerCase())
                         })
@@ -289,6 +279,10 @@ export default function Rewards() {
                             <div className='ml-1 mb-1 text-textColor'>Beans Required</div>
                             <input className='w-full border border-borderColor rounded-xl p-2 outline-none font-semibold' type='number' value={RequireBeans} onChange={(e) => setRequireBeans(e.target.value)} />
                             <img className='w-6 absolute top-7 md:top-10 right-4' src={images.coffeeBeans} alt='Coffee Beans' />
+                        </div>
+                        <div className='mt-4'>
+                            <div className='ml-1 mb-1 text-textColor'>Error Message</div>
+                            <textarea className='w-full border border-borderColor rounded-xl p-2 outline-none font-semibold resize-none' rows={4} value={errMsg} onChange={(e) => setErrMsg(e.target.value)}></textarea>
                         </div>
                         <div className='mt-4 flex justify-between items-center'>
                             <div onClick={handleCanclleModal} className='cursor-pointer active:opacity-50 border border-borderColor text-textColor rounded-xl flex justify-center items-center px-6 py-1'>Cancel</div>

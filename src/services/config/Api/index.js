@@ -1,7 +1,7 @@
 import axios from "axios"
 
-// export const baseURL = "http://192.168.100.112:8080/"
-export const baseURL = "https://cuppa-backend-9a54793717b3.herokuapp.com/"
+export const baseURL = "http://192.168.100.111:8080/"
+// export const baseURL = "https://cuppa-backend-9a54793717b3.herokuapp.com/"
 
 
 export const Signin = async (body) => {
@@ -104,4 +104,35 @@ export const updateReward = async (token, body) => {
         return error
     }
 }
+
+export const activateAccount = async (token, outletId) => {
+    try {
+        console.log(outletId);
+
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        };
+        const response = await axios.post(`${baseURL}superAdmin/activateOutlet`, {outletId}, { headers })
+        return response?.data
+    } catch (error) {
+        return error
+    }
+}
+
+export const deactivateOutlet = async (token, outletId) => {
+    try {
+        console.log(outletId);
+
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        };
+        const response = await axios.post(`${baseURL}superAdmin/deactivateOutlet`, {outletId}, { headers })
+        return response?.data
+    } catch (error) {
+        return error
+    }
+}
+
 

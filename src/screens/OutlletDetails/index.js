@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import images from '../../assets'
 import Modal from 'react-modal';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -7,10 +7,18 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CoffeeCarousel from '../../Component/Slider';
 import moment from 'moment';
+import { ModalContext } from '../Layout';
+import { useSelector } from 'react-redux';
+import { selectAuthToken } from '../../store/authTokenSlice';
+import { activateAccount, deactivateOutlet } from '../../services/config/Api';
 
 export default function OutletDetails() {
+
+    const { setIsLoading } = useContext(ModalContext);
+
     const scrollRef = useRef(null);
     const eventScrollRef = useRef(null);
+    const authToken = useSelector(selectAuthToken)
 
     const location = useLocation();
     const item = location.state?.item;
@@ -23,10 +31,11 @@ export default function OutletDetails() {
     const [orderStatus, setOrderStatus] = useState("All");
     const [cafeDetails, setCafeDetails] = useState()
     const [isExpanded, setIsExpanded] = useState(false);
+    const [deactivateModal, setDeactivateModal] = useState(false)
 
     const toggleExpanded = () => setIsExpanded(!isExpanded);
 
-    const descriptionLimit = 100; // You can adjust this character limit
+    const descriptionLimit = 100;
 
     const shouldShowReadMore = cafeDetails?.description?.length > descriptionLimit;
 
@@ -35,6 +44,11 @@ export default function OutletDetails() {
             console.log
                 ("location.state.item", item);
             setCafeDetails(item)
+            if (item?.active) {
+                setDeactivateModal(false)
+            } else {
+                setDeactivateModal(true)
+            }
         }
     }, [location.state?.item]);
 
@@ -137,6 +151,46 @@ export default function OutletDetails() {
         return moment(date).format('MMM-DD-YYYY h:mm A');
     };
 
+    const handleActiveOutlet = async () => {
+        try {
+            console.log("start");
+            setIsLoading(true)
+            const response = await activateAccount(authToken, item?._id)
+            console.log(response);
+            if (response?.success) {
+                setIsLoading(false)
+                setCafeDetails(response?.outlet)
+                alert(response?.message)
+            } else {
+                setIsLoading(false)
+                alert(response?.message)
+            }
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false)
+        }
+    }
+
+    const handleDeactivateOutlet = async () => {
+        try {
+            console.log("start");
+            setIsLoading(true)
+            const response = await deactivateOutlet(authToken, item?._id)
+            console.log(response);
+            if (response?.success) {
+                setIsLoading(false)
+                setCafeDetails(response?.outlet)
+                alert(response?.message)
+            } else {
+                setIsLoading(false)
+                alert(response?.message)
+            }
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false)
+        }
+    }
+
     return (
         <div className='md:pl-[18%] sm:pl-[19%] pl-[22%] py-6 px-2'>
             <div className='flex  items-center mb-4 md:6 lg:mb-10'>
@@ -144,9 +198,14 @@ export default function OutletDetails() {
                     <img className='w-6 md:w-8 cursor-pointer active:opacity-50' src={images.backBtn} onClick={() => navigate('/outlets')} />
                 </div>
                 <div className='text-xl md:text-2xl font-semibold mx-auto'>{`${cafeDetails?.outletName} Details`}</div>
-                {/* <div className=' cursor-pointer active:opacity-50 bg-gradient-to-r from-green to-darkerGreen text-white text-xs sm:text-base px-2 md:px-6 py-2 rounded-md font-medium'>
-                    Ban Outlet
-                </div> */}
+                <div
+                    className=' cursor-pointer active:opacity-50 bg-gradient-to-r from-green to-darkerGreen text-white text-xs sm:text-base px-2 md:px-6 py-2 rounded-md font-medium'
+                    onClick={() => cafeDetails?.active ? handleDeactivateOutlet() : handleActiveOutlet()}
+                >{
+                        cafeDetails?.active ? 'Deactivate Outlet' : 'Activate Outlet'
+                    }
+
+                </div>
             </div>
             <div className='flex flex-col lg:flex-row gap-2 gap-2 lg:gap-6 mb-4 md:mb-6 lg:mb-10'>
                 <div>
@@ -449,6 +508,14 @@ export default function OutletDetails() {
                             </div>
                         </>
                     )}
+                </div>
+            </Modal>
+            <Modal isOpen={deactivateModal} className="outline-none h-[100vh] flex items-center justify-center bg-black bg-opacity-10">
+                <div className='flex flex-col items-center mt-2 mb-4 bg-white w-[90%] sm:w-[70%] md:w-[60%] lg:w-[30%] xl:w-[20%] py-6 rounded-lg shadow-md'>
+                    <img src={images.deactivate} className='w-24' />
+                    <div className='font-semibold mt-4'>This Outlet is Banned</div>
+                    <div className='text-center px-8 mt-4 text-sm text-gray'>This outlet has been marked as banned and is not visible to users on the platform. Orders cannot be placed until the status is changed.</div>
+                    <div className='bg-[#BCBCBC] mt-4 w-[80%] text-center py-2 cursor-pointer active:opacity-70' onClick={() => setDeactivateModal(false)}>View Outlet</div>
                 </div>
             </Modal>
         </div>
