@@ -28,6 +28,7 @@ export default function Rewards() {
     const [isEdit, setIsEdit] = useState(false)
     const [editId, setEditId] = useState(null)
     const [errMsg, setErrMsg] = useState('')
+    const [instructions , setInstructions] = useState('')
 
     useEffect(() => {
         if (isModalOpen) {
@@ -91,13 +92,17 @@ export default function Rewards() {
         if (!errMsg) {
             return handleError("Please add error message")
         }
+        if (!instructions) {
+            return handleError("Please add Instructions")
+        }
         try {
             setIsLoading(true)
             const body = {
                 cover: selectedImage,
                 title: rewardName,
                 numberOfBeans: RequireBeans,
-                errMsg
+                errMsg,
+                instructions
             }
             const response = await addReward(authToken, body)
             if (response?.success) {
@@ -109,6 +114,7 @@ export default function Rewards() {
                 setRequireBeans('')
                 setErrMsg('')
                 setSelectedImage(null)
+                setInstructions('')
             } else {
                 setIsLoading(false)
                 handleError(response?.message)
@@ -144,6 +150,7 @@ export default function Rewards() {
         setSelectedImage(reward?.cover)
         setRequireBeans(reward?.numberOfBeans)
         setErrMsg(reward?.errMsg)
+        setInstructions(reward?.instructions)
         setIsModalOpen(true)
     }
 
@@ -154,6 +161,7 @@ export default function Rewards() {
         setRequireBeans('')
         setErrMsg('')
         setSelectedImage(null)
+        setInstructions('')
     }
 
     const handleUpdateReward = async () => {
@@ -163,7 +171,8 @@ export default function Rewards() {
                 cover: selectedImage,
                 title: rewardName,
                 numberOfBeans: RequireBeans,
-                errMsg
+                errMsg,
+                instructions
             }
             const response = await updateReward(authToken, body)
             if (response?.success) {
@@ -177,6 +186,7 @@ export default function Rewards() {
                 setRequireBeans('')
                 setErrMsg('')
                 setSelectedImage(null)
+                setInstructions('')
             } else {
                 setIsLoading(false)
                 handleError(response?.message)
@@ -283,6 +293,10 @@ export default function Rewards() {
                         <div className='mt-4'>
                             <div className='ml-1 mb-1 text-textColor'>Error Message</div>
                             <textarea className='w-full border border-borderColor rounded-xl p-2 outline-none font-semibold resize-none' rows={4} value={errMsg} onChange={(e) => setErrMsg(e.target.value)}></textarea>
+                        </div>
+                        <div className='mt-4'>
+                            <div className='ml-1 mb-1 text-textColor'>Instructions</div>
+                            <textarea className='w-full border border-borderColor rounded-xl p-2 outline-none font-semibold resize-none' rows={4} value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea>
                         </div>
                         <div className='mt-4 flex justify-between items-center'>
                             <div onClick={handleCanclleModal} className='cursor-pointer active:opacity-50 border border-borderColor text-textColor rounded-xl flex justify-center items-center px-6 py-1'>Cancel</div>
